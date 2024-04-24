@@ -44,10 +44,13 @@ public class SignUp extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jXHyperlink1 = new org.jdesktop.swingx.JXHyperlink();
         jPasswordField2 = new javax.swing.JPasswordField();
+        jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sign Up");
+        setUndecorated(true);
         setPreferredSize(new java.awt.Dimension(800, 500));
+        setResizable(false);
         getContentPane().setLayout(null);
 
         Left.setBackground(new java.awt.Color(255, 255, 255));
@@ -71,27 +74,27 @@ public class SignUp extends javax.swing.JFrame {
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightLayout.createSequentialGroup()
+                .addContainerGap(118, Short.MAX_VALUE)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(RightLayout.createSequentialGroup()
-                        .addGap(112, 112, 112)
-                        .addComponent(jLabel6))
-                    .addGroup(RightLayout.createSequentialGroup()
-                        .addGap(143, 143, 143)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(104, 104, 104))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
                         .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jLabel5))))
-                .addContainerGap(112, Short.MAX_VALUE))
+                            .addComponent(jLabel5))
+                        .addGap(136, 136, 136))))
         );
         RightLayout.setVerticalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(RightLayout.createSequentialGroup()
-                .addGap(66, 66, 66)
+                .addGap(63, 63, 63)
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 214, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 212, Short.MAX_VALUE)
                 .addComponent(jLabel6)
-                .addGap(31, 31, 31))
+                .addGap(36, 36, 36))
         );
 
         Left.add(Right);
@@ -159,14 +162,18 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
+        jLabel11.setFont(new java.awt.Font("Forte", 0, 24)); // NOI18N
+        jLabel11.setText("X");
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout leftttLayout = new javax.swing.GroupLayout(lefttt);
         lefttt.setLayout(leftttLayout);
         leftttLayout.setHorizontalGroup(
             leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
-                .addContainerGap(110, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(97, 97, 97))
             .addGroup(leftttLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -183,12 +190,23 @@ public class SignUp extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField4, javax.swing.GroupLayout.DEFAULT_SIZE, 292, Short.MAX_VALUE)
                     .addComponent(jPasswordField2))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                .addContainerGap(109, Short.MAX_VALUE)
+                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(97, 97, 97))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())))
         );
         leftttLayout.setVerticalGroup(
             leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftttLayout.createSequentialGroup()
-                .addGap(85, 85, 85)
+                .addGap(34, 34, 34)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
@@ -222,6 +240,7 @@ public class SignUp extends javax.swing.JFrame {
         Left.setBounds(0, 0, 760, 480);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
@@ -258,6 +277,11 @@ public class SignUp extends javax.swing.JFrame {
         LoginFrame.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_jXHyperlink1ActionPerformed
+
+    private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jLabel11MouseClicked
 
     /**
      * @param args the command line arguments
@@ -300,6 +324,7 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
