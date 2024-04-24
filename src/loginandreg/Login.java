@@ -252,33 +252,33 @@ public class Login extends javax.swing.JFrame {
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
         Statement stmt = con.createStatement();
-        String sqlCommand = "SELECT account_no FROM account where account_no=?"; // Replace "your_table_name" with the actual table name
+        String sqlCommand = "SELECT card_number FROM account where card_number=?"; // Replace "your_table_name" with the actual table name
         PreparedStatement pstmt = con.prepareStatement(sqlCommand);
         pstmt.setString(1, EmailUrl);
         ResultSet rs = pstmt.executeQuery();
         
         if (rs.next()) {
-        String accountNo = rs.getString("account_no");
-        if (EmailUrl.equals(accountNo)) {
-            JOptionPane.showMessageDialog(this, "Right Email");
-        } else {
-            JOptionPane.showMessageDialog(this, "Wrong Email");
-        }
+            String accountNo = rs.getString("card_number");
+            if (EmailUrl.equals(accountNo)) {
+                JOptionPane.showMessageDialog(this, "Right Email");
+            } else {
+                JOptionPane.showMessageDialog(this, "Wrong Email");
+            }
          } else {
         JOptionPane.showMessageDialog(this, "No account found for the provided email");
         }
     
-         sqlCommand = "SELECT customer_id FROM account where customer_id=?"; // Replace "your_table_name" with the actual table name
+         sqlCommand = "SELECT atm_pin FROM account where card_number=?"; // Replace "your_table_name" with the actual table name
          pstmt = con.prepareStatement(sqlCommand);
-         pstmt.setString(1,Password);
+         pstmt.setString(1,EmailUrl);
          rs = pstmt.executeQuery();
         if (rs.next()) {
-        String Cs_ID = rs.getString("customer_id");
-        if (Password.equals(Cs_ID)) {
-            JOptionPane.showMessageDialog(this, "Right Password");
-        } else {
-            JOptionPane.showMessageDialog(this, "Wrong Password");
-        }
+            String Cs_ID = rs.getString("atm_pin");
+            if (Password.equals(Cs_ID)) {
+                JOptionPane.showMessageDialog(this, "Right Password");
+            } else {
+                JOptionPane.showMessageDialog(this, "Wrong Password");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "No account found for the provided email");
         }
