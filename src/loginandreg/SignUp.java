@@ -11,6 +11,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.StringTokenizer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -197,6 +207,11 @@ public class SignUp extends javax.swing.JFrame {
         kButton2.setkEndColor(new java.awt.Color(255, 255, 51));
         kButton2.setkHoverEndColor(new java.awt.Color(0, 102, 102));
         kButton2.setkStartColor(new java.awt.Color(0, 102, 102));
+        kButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                kButton2MouseClicked(evt);
+            }
+        });
         kButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 kButton2ActionPerformed(evt);
@@ -321,7 +336,7 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_PasswordMouseClicked
 
     private void PasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordKeyTyped
-            String pass =Password.getText();
+           String pass =Password.getText();
             
             if(!PatternChecker.MatchPattern8Num(pass))
             {
@@ -386,6 +401,215 @@ public class SignUp extends javax.swing.JFrame {
     private void FnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FnameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_FnameActionPerformed
+
+    private void kButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kButton2MouseClicked
+       // TODO add your handling code here:
+        String fname=Fname.getText();
+        String lname=Lname.getText();
+        String email=Email.getText();
+        String pass =Password.getText();
+        if(fname.isEmpty()||lname.isEmpty()||email.isEmpty()||pass.isEmpty())
+        {
+            JOptionPane.showMessageDialog(this,"please enter the required fields");
+        }
+        else
+        {
+            if(fname.length()<4||lname.length()<4)
+            {
+                JOptionPane.showMessageDialog(this,"Name is too short");
+            }
+            else
+            {
+                StringTokenizer token =new StringTokenizer(email,"@");
+                String username=new String();
+                String domain = new String();
+                if(token.hasMoreTokens())
+                {
+                    username=(String)token.nextElement();//user ie before @
+                }
+                while(token.hasMoreTokens())
+                {
+                    domain = token.nextToken();//@gmail????
+                }
+                StringTokenizer token2=new StringTokenizer(domain,".");
+                if(token2.hasMoreTokens())
+                {
+                    domain=token2.nextToken();
+                }
+                
+                /*************************/
+                
+                domain=domain.toLowerCase();
+                
+                if(!domain.equals("gmail"))
+                {
+                    JOptionPane.showMessageDialog(this,"we accept gmail only");
+                }
+                else
+                {
+                    
+                    String newCardNumber =new String();
+                    String maxStr="0";
+                    String newCardNumber2=new String();
+                    
+                    try 
+                    {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
+                        Statement stmt = con.createStatement();
+                        String sqlCommand ="SELECT MAX(national_id) as e FROM customers;";
+                        PreparedStatement pstmt = con.prepareStatement(sqlCommand);
+                        ResultSet rs2 = pstmt.executeQuery();
+
+
+                        try
+                        {
+                            if (rs2.next()) {
+                                // Fetch the value from ResultSet
+                                String nationalId = rs2.getString("e");
+                                System.out.println("Retrieved national_id: " + nationalId); // Log the retrieved value
+
+                                // Check if nationalId is not null and not empty
+                                maxStr = nationalId.substring(1);                                
+                            }
+                        }
+                        catch(Exception e)
+                        {
+                            JOptionPane.showMessageDialog(this,"first");
+                            JOptionPane.showMessageDialog(this,e);
+                        }
+                        finally
+                        {
+                        newCardNumber = (Integer.toString(Integer.parseInt(maxStr) + 1));
+                        System.out.println("new national_id: " + newCardNumber);
+                        }
+
+                    // Close the ResultSet, Statement, and Connection
+                    } 
+                    catch (Exception e) 
+                    {
+                        JOptionPane.showMessageDialog(this,e);
+                    }
+                    
+                    
+                    
+                    /********************************/
+                    
+                    try
+                    {
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
+                        Statement stmt = con.createStatement();
+                        String sqlCommand = "INSERT INTO customers(Fname, lname, email, national_id,mobile_no,Address,date_birth) VALUES(?,?,?,?,?,?,?);"; // Replace "your_table_name" with the actual table name
+                        PreparedStatement pstmt = con.prepareStatement(sqlCommand);
+                        
+                        
+                        pstmt.setString(1, Fname.getText());
+                        pstmt.setString(2, Lname.getText());
+                        pstmt.setString(3, username);
+                        pstmt.setString(4,newCardNumber);
+                        pstmt.setString(5,Integer.toString(01022473));
+                        pstmt.setString(6,Integer.toString(0));
+                        String dateOfBirth = "2002-06-25";
+                        java.sql.Date sqlDate = java.sql.Date.valueOf(dateOfBirth);
+                        pstmt.setDate(7, sqlDate);
+                        int rs = pstmt.executeUpdate();
+                  }
+                  catch(Exception e)
+                  {
+                      JOptionPane.showMessageDialog(this,"second");
+                      JOptionPane.showMessageDialog(this,e);
+
+                  }
+                    
+                    try{
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
+                        Statement stmt = con.createStatement();
+                        String sqlCommand = "SELECT MAX(card_number) as e FROM account;";
+                        PreparedStatement pstmt = con.prepareStatement(sqlCommand);
+                        maxStr=new String();
+                        pstmt = con.prepareStatement(sqlCommand);
+                        ResultSet rs2 = pstmt.executeQuery();
+ 
+                      if (rs2.next()) {
+        // Fetch the value from ResultSet
+                    maxStr = rs2.getString("e"); // Ensure the column name is quoted properly
+
+                    // Log the retrieved value for debugging
+                    System.out.println("Retrieved max card number: " + maxStr);
+
+                    // Check if maxStr is not null
+                    if (maxStr != null && !maxStr.isEmpty()) {
+                        // Invoke substring method on maxStr
+                        maxStr = maxStr.substring(1);
+                        // Further operations with the substring...
+                    } else {
+                        // Handle the case where maxStr is null or empty
+                        maxStr = "0";
+                    }
+                }
+
+                // Increment the maximum card number and construct the new card number
+                newCardNumber2 = "C" + (Integer.parseInt(maxStr) + 1);
+
+                } catch (Exception e) {
+                    // Log any exceptions for debugging
+                    JOptionPane.showMessageDialog(this, "third" );
+                    JOptionPane.showMessageDialog(this, "Error occurred: " + e.getMessage());
+                    e.printStackTrace();
+                }
+
+
+                       // Increment the maximum card number and construct the new card number
+                       newCardNumber2 = ("C"+Integer.toString(Integer.parseInt(maxStr) + 1));
+                    
+                    /********************************/
+                    
+                    try {
+                        // Establish database connection
+                        Class.forName("com.mysql.cj.jdbc.Driver");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
+
+                        // Prepare INSERT statement
+                        String sqlCommand = "INSERT INTO account (card_number, acc_pass, national_no, balance, acc_category, exipre_date, cvv, atm_pin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+                        PreparedStatement pstmt = con.prepareStatement(sqlCommand);
+
+                        // Set parameter values
+                        pstmt.setString(1, newCardNumber2);
+                        pstmt.setString(2, pass);
+                        pstmt.setString(3, newCardNumber);
+                        pstmt.setInt(4, 0); // Assuming balance is an integer column
+                        pstmt.setString(5, "s");
+                        java.sql.Date sqlDate = java.sql.Date.valueOf("2002-06-25");
+                        pstmt.setDate(6, sqlDate);
+                        pstmt.setString(7, "0");
+                        pstmt.setString(8, "000000");
+
+                        // Execute the statement
+                        int rowsAffected = pstmt.executeUpdate();
+
+                        // Close resources
+                        pstmt.close();
+                        con.close();
+
+                        // Dispose current frame and open new frame
+                        this.dispose();
+                        SignUp2 SignUp2Frame = new SignUp2();
+                        SignUp2Frame.setVisible(true);
+                        SignUp2Frame.pack();
+                        SignUp2Frame.setLocationRelativeTo(null);
+
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(this, "Error occurred: " + e.getMessage());
+                        e.printStackTrace();
+                    }
+
+                    
+                }
+            }
+        }
+    }//GEN-LAST:event_kButton2MouseClicked
 
     /**
      * @param args the command line arguments
