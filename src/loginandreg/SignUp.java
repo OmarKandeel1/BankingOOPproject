@@ -48,13 +48,13 @@ public class SignUp extends javax.swing.JFrame {
         Lname = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jXHyperlink1 = new org.jdesktop.swingx.JXHyperlink();
         Password = new javax.swing.JPasswordField();
         jLabel14 = new javax.swing.JLabel();
         Bar = new javax.swing.JProgressBar();
         mess = new javax.swing.JLabel();
+        kButton2 = new com.k33ptoo.components.KButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sign Up");
@@ -151,20 +151,6 @@ public class SignUp extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel10.setText("Password");
 
-        jButton2.setBackground(new java.awt.Color(0, 102, 102));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Next");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
-        });
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Already have an account? ");
 
         jXHyperlink1.setForeground(new java.awt.Color(0, 102, 102));
@@ -202,6 +188,20 @@ public class SignUp extends javax.swing.JFrame {
         Bar.setBackground(new java.awt.Color(255, 255, 255));
         Bar.setForeground(new java.awt.Color(255, 102, 0));
 
+        kButton2.setForeground(new java.awt.Color(204, 102, 0));
+        kButton2.setText("Next");
+        kButton2.setActionCommand("Next");
+        kButton2.setkBackGroundColor(new java.awt.Color(255, 102, 102));
+        kButton2.setkBorderRadius(25);
+        kButton2.setkEndColor(new java.awt.Color(255, 255, 51));
+        kButton2.setkHoverEndColor(new java.awt.Color(0, 102, 102));
+        kButton2.setkStartColor(new java.awt.Color(0, 102, 102));
+        kButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout leftttLayout = new javax.swing.GroupLayout(lefttt);
         lefttt.setLayout(leftttLayout);
         leftttLayout.setHorizontalGroup(
@@ -209,9 +209,6 @@ public class SignUp extends javax.swing.JFrame {
             .addGroup(leftttLayout.createSequentialGroup()
                 .addGap(35, 35, 35)
                 .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(leftttLayout.createSequentialGroup()
-                        .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(leftttLayout.createSequentialGroup()
                         .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(Bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -224,7 +221,6 @@ public class SignUp extends javax.swing.JFrame {
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jButton2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Lname, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -235,7 +231,12 @@ public class SignUp extends javax.swing.JFrame {
                                     .addComponent(Password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addComponent(jLabel14)
-                        .addGap(0, 18, Short.MAX_VALUE))))
+                        .addGap(0, 18, Short.MAX_VALUE))
+                    .addGroup(leftttLayout.createSequentialGroup()
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 26, Short.MAX_VALUE))))
         );
         leftttLayout.setVerticalGroup(
             leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,12 +269,12 @@ public class SignUp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
                 .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(99, Short.MAX_VALUE))
         );
 
         Left.add(lefttt);
@@ -285,10 +286,6 @@ public class SignUp extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void FnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FnameActionPerformed
 
     private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
         // TODO add your handling code here:
@@ -302,15 +299,6 @@ public class SignUp extends javax.swing.JFrame {
         // TODO add your handling code here:
        
     }//GEN-LAST:event_PasswordActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-         SignUp2 SignUp2Frame = new SignUp2();
-        SignUp2Frame.setVisible(true);
-        SignUp2Frame.pack();
-        SignUp2Frame.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jXHyperlink1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXHyperlink1ActionPerformed
         // TODO add your handling code here:  Login LoginFrame = new Login();
@@ -385,32 +373,18 @@ public class SignUp extends javax.swing.JFrame {
              //nums.repaint();
     }//GEN-LAST:event_EmailKeyTyped
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
         // TODO add your handling code here:
-        String fname=Fname.getText();
-        String lname=Lname.getText();
-        String email=Email.getText();
-        String pass =Password.getText();
-try {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
-        Statement stmt = con.createStatement();
-        String sqlCommand = "SELECT email FROM customers where card_no=?"; // Replace "your_table_name" with the actual table name
-        PreparedStatement pstmt = con.prepareStatement(sqlCommand);
-        pstmt.setString(1, email);
-        int rs = pstmt.executeUpdate();
-        
-       
-    
-        
-        // Close the ResultSet, Statement, and Connection
-} 
-catch (Exception e) 
-{
-    JOptionPane.showMessageDialog(this,e);
-}
-        
-    }//GEN-LAST:event_jButton2MouseClicked
+          SignUp2 SignUp2Frame = new SignUp2();
+        SignUp2Frame.setVisible(true);
+        SignUp2Frame.pack();
+        SignUp2Frame.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_kButton2ActionPerformed
+
+    private void FnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FnameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -455,7 +429,6 @@ catch (Exception e)
     private javax.swing.JTextField Lname;
     private javax.swing.JPasswordField Password;
     private javax.swing.JPanel Right;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel14;
@@ -467,6 +440,7 @@ catch (Exception e)
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private org.jdesktop.swingx.JXHyperlink jXHyperlink1;
+    private com.k33ptoo.components.KButton kButton2;
     private javax.swing.JPanel lefttt;
     private javax.swing.JLabel mess;
     // End of variables declaration//GEN-END:variables
