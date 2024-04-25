@@ -142,6 +142,7 @@ public class Login extends javax.swing.JFrame {
         });
 
         jLabel8.setFont(new java.awt.Font("Forte", 0, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setText("X");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
