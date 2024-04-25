@@ -178,6 +178,7 @@ public class SignUp extends javax.swing.JFrame {
         });
 
         jLabel14.setFont(new java.awt.Font("Forte", 0, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 102, 102));
         jLabel14.setText("X");
         jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -186,7 +187,7 @@ public class SignUp extends javax.swing.JFrame {
         });
 
         Bar.setBackground(new java.awt.Color(255, 255, 255));
-        Bar.setForeground(new java.awt.Color(255, 102, 0));
+        Bar.setForeground(new java.awt.Color(0, 102, 102));
 
         kButton2.setForeground(new java.awt.Color(204, 102, 0));
         kButton2.setText("Next");
@@ -231,12 +232,12 @@ public class SignUp extends javax.swing.JFrame {
                                     .addComponent(Password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addComponent(jLabel14)
-                        .addGap(0, 18, Short.MAX_VALUE))
+                        .addGap(0, 19, Short.MAX_VALUE))
                     .addGroup(leftttLayout.createSequentialGroup()
                         .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 26, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         leftttLayout.setVerticalGroup(
             leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

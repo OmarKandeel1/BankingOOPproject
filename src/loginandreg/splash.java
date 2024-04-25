@@ -1,6 +1,7 @@
 
 package loginandreg;
-
+import javax.swing.plaf.basic.BasicProgressBarUI;
+import java.awt.*;
 /**
  *
  * @author 20102

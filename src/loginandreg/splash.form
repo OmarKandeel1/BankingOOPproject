@@ -124,6 +124,10 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JProgressBar" name="Bar">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JProgressBar()"/>
+            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="splash_Bar"/>
+          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="Prec">
           <Properties>
