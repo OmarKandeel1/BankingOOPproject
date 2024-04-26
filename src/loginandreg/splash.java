@@ -158,10 +158,10 @@ public class splash extends javax.swing.JFrame {
         }
         sc.setVisible(false);
         sc.dispose();
-        Login LoginFrame = new Login();
-        LoginFrame.setVisible(true);
-        LoginFrame.pack();
-        LoginFrame.setLocationRelativeTo(null);
+        loginGIF2 logingif = new loginGIF2();
+        logingif.setVisible(true);
+        logingif.pack();
+        logingif.setLocationRelativeTo(null);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

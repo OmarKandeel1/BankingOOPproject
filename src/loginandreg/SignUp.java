@@ -403,7 +403,7 @@ public class SignUp extends javax.swing.JFrame {
     }//GEN-LAST:event_FnameActionPerformed
 
     private void kButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kButton2MouseClicked
-       // TODO add your handling code here:
+        // TODO add your handling code here:
         String fname=Fname.getText();
         String lname=Lname.getText();
         String email=Email.getText();
@@ -436,23 +436,23 @@ public class SignUp extends javax.swing.JFrame {
                 {
                     domain=token2.nextToken();
                 }
-                
+
                 /*************************/
-                
+
                 domain=domain.toLowerCase();
-                
+
                 if(!domain.equals("gmail"))
                 {
                     JOptionPane.showMessageDialog(this,"we accept gmail only");
                 }
                 else
                 {
-                    
+
                     String newCardNumber =new String();
                     String maxStr="0";
                     String newCardNumber2=new String();
-                    
-                    try 
+
+                    try
                     {
                         Class.forName("com.mysql.cj.jdbc.Driver");
                         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
@@ -460,7 +460,6 @@ public class SignUp extends javax.swing.JFrame {
                         String sqlCommand ="SELECT MAX(national_id) as e FROM customers;";
                         PreparedStatement pstmt = con.prepareStatement(sqlCommand);
                         ResultSet rs2 = pstmt.executeQuery();
-
 
                         try
                         {
@@ -470,7 +469,7 @@ public class SignUp extends javax.swing.JFrame {
                                 System.out.println("Retrieved national_id: " + nationalId); // Log the retrieved value
 
                                 // Check if nationalId is not null and not empty
-                                maxStr = nationalId.substring(1);                                
+                                maxStr = nationalId.substring(1);
                             }
                         }
                         catch(Exception e)
@@ -480,21 +479,19 @@ public class SignUp extends javax.swing.JFrame {
                         }
                         finally
                         {
-                        newCardNumber = (Integer.toString(Integer.parseInt(maxStr) + 1));
-                        System.out.println("new national_id: " + newCardNumber);
+                            newCardNumber = (Integer.toString(Integer.parseInt(maxStr) + 1));
+                            System.out.println("new national_id: " + newCardNumber);
                         }
 
-                    // Close the ResultSet, Statement, and Connection
-                    } 
-                    catch (Exception e) 
+                        // Close the ResultSet, Statement, and Connection
+                    }
+                    catch (Exception e)
                     {
                         JOptionPane.showMessageDialog(this,e);
                     }
-                    
-                    
-                    
+
                     /********************************/
-                    
+
                     try
                     {
                         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -502,8 +499,7 @@ public class SignUp extends javax.swing.JFrame {
                         Statement stmt = con.createStatement();
                         String sqlCommand = "INSERT INTO customers(Fname, lname, email, national_id,mobile_no,Address,date_birth) VALUES(?,?,?,?,?,?,?);"; // Replace "your_table_name" with the actual table name
                         PreparedStatement pstmt = con.prepareStatement(sqlCommand);
-                        
-                        
+
                         pstmt.setString(1, Fname.getText());
                         pstmt.setString(2, Lname.getText());
                         pstmt.setString(3, username);
@@ -514,14 +510,14 @@ public class SignUp extends javax.swing.JFrame {
                         java.sql.Date sqlDate = java.sql.Date.valueOf(dateOfBirth);
                         pstmt.setDate(7, sqlDate);
                         int rs = pstmt.executeUpdate();
-                  }
-                  catch(Exception e)
-                  {
-                      JOptionPane.showMessageDialog(this,"second");
-                      JOptionPane.showMessageDialog(this,e);
+                    }
+                    catch(Exception e)
+                    {
+                        JOptionPane.showMessageDialog(this,"second");
+                        JOptionPane.showMessageDialog(this,e);
 
-                  }
-                    
+                    }
+
                     try{
                         Class.forName("com.mysql.cj.jdbc.Driver");
                         Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
@@ -531,41 +527,40 @@ public class SignUp extends javax.swing.JFrame {
                         maxStr=new String();
                         pstmt = con.prepareStatement(sqlCommand);
                         ResultSet rs2 = pstmt.executeQuery();
- 
-                      if (rs2.next()) {
-        // Fetch the value from ResultSet
-                    maxStr = rs2.getString("e"); // Ensure the column name is quoted properly
 
-                    // Log the retrieved value for debugging
-                    System.out.println("Retrieved max card number: " + maxStr);
+                        if (rs2.next()) {
+                            // Fetch the value from ResultSet
+                            maxStr = rs2.getString("e"); // Ensure the column name is quoted properly
 
-                    // Check if maxStr is not null
-                    if (maxStr != null && !maxStr.isEmpty()) {
-                        // Invoke substring method on maxStr
-                        maxStr = maxStr.substring(1);
-                        // Further operations with the substring...
-                    } else {
-                        // Handle the case where maxStr is null or empty
-                        maxStr = "0";
+                            // Log the retrieved value for debugging
+                            System.out.println("Retrieved max card number: " + maxStr);
+
+                            // Check if maxStr is not null
+                            if (maxStr != null && !maxStr.isEmpty()) {
+                                // Invoke substring method on maxStr
+                                maxStr = maxStr.substring(1);
+                                // Further operations with the substring...
+                            } else {
+                                // Handle the case where maxStr is null or empty
+                                maxStr = "0";
+                            }
+                        }
+
+                        // Increment the maximum card number and construct the new card number
+                        newCardNumber2 = "C" + (Integer.parseInt(maxStr) + 1);
+
+                    } catch (Exception e) {
+                        // Log any exceptions for debugging
+                        JOptionPane.showMessageDialog(this, "third" );
+                        JOptionPane.showMessageDialog(this, "Error occurred: " + e.getMessage());
+                        e.printStackTrace();
                     }
-                }
 
-                // Increment the maximum card number and construct the new card number
-                newCardNumber2 = "C" + (Integer.parseInt(maxStr) + 1);
+                    // Increment the maximum card number and construct the new card number
+                    newCardNumber2 = ("C"+Integer.toString(Integer.parseInt(maxStr) + 1));
 
-                } catch (Exception e) {
-                    // Log any exceptions for debugging
-                    JOptionPane.showMessageDialog(this, "third" );
-                    JOptionPane.showMessageDialog(this, "Error occurred: " + e.getMessage());
-                    e.printStackTrace();
-                }
-
-
-                       // Increment the maximum card number and construct the new card number
-                       newCardNumber2 = ("C"+Integer.toString(Integer.parseInt(maxStr) + 1));
-                    
                     /********************************/
-                    
+
                     try {
                         // Establish database connection
                         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -605,7 +600,6 @@ public class SignUp extends javax.swing.JFrame {
                         e.printStackTrace();
                     }
 
-                    
                 }
             }
         }
