@@ -14,7 +14,7 @@ public class PatternChecker {
         
         
         //Pattern pattern = Pattern.compile("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=.*\\d{8,})(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.</>?]).+$");
-          Pattern pattern = Pattern.compile("^(?=.*[A-Z].*[A-Z])(?=.*[a-z].*[a-z])(?=.*\\d{8,})(?=.*[@!_-]).*$");
+        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d{8,})(?=.*[@!_\\\\-]).*$");
         // Match the pattern against the string
         Matcher matcher = pattern.matcher(EnteredPattern);
 

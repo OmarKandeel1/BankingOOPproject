@@ -4,6 +4,7 @@
  */
 package loginandreg;
 
+import com.mysql.cj.protocol.Resultset;
 import java.awt.Color;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,16 +18,32 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.StringTokenizer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import java.text.SimpleDateFormat;
+import org.jdesktop.swingx.JXDatePicker;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 /**
  *
  * @author OmarKandeel
  */
 public class SignUp extends javax.swing.JFrame {
+
+    boolean VerifiedEmail=false;
+    String RandomCode=ValMail.generateRandomCode(6);
+    int Cou=0;
+
 
     /**
      * Creates new form SignUp
@@ -46,25 +63,52 @@ public class SignUp extends javax.swing.JFrame {
 
         Left = new javax.swing.JPanel();
         Right = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        lefttt = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        Fname = new javax.swing.JTextField();
-        Email = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        Lname = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        Bar = new javax.swing.JProgressBar();
         jLabel10 = new javax.swing.JLabel();
+        Lname = new javax.swing.JTextField();
+        Fname = new javax.swing.JTextField();
+        city = new javax.swing.JTextField();
+        Email = new javax.swing.JTextField();
+        ID = new javax.swing.JTextField();
+        country = new javax.swing.JTextField();
+        Password = new javax.swing.JPasswordField();
+        togbtn1 = new javax.swing.JToggleButton();
+        mess = new javax.swing.JLabel();
+        Verify = new com.k33ptoo.components.KButton();
+        verifo = new javax.swing.JTextField();
+        Verify1 = new com.k33ptoo.components.KButton();
+        mess1 = new javax.swing.JLabel();
+        lefttt = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jXHyperlink1 = new org.jdesktop.swingx.JXHyperlink();
-        Password = new javax.swing.JPasswordField();
-        jLabel14 = new javax.swing.JLabel();
-        Bar = new javax.swing.JProgressBar();
-        mess = new javax.swing.JLabel();
-        kButton2 = new com.k33ptoo.components.KButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        expire_date = new org.jdesktop.swingx.JXDatePicker();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        signup = new com.k33ptoo.components.KButton();
+        jLabel22 = new javax.swing.JLabel();
+        atm_pin = new javax.swing.JTextField();
+        card_no = new javax.swing.JTextField();
+        cvv = new javax.swing.JTextField();
+        mob_no = new javax.swing.JTextField();
+        add = new javax.swing.JTextField();
+        AccountType = new java.awt.Choice();
+        Gender = new java.awt.Choice();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sign Up");
@@ -80,8 +124,6 @@ public class SignUp extends javax.swing.JFrame {
         Right.setBackground(new java.awt.Color(0, 102, 102));
         Right.setPreferredSize(new java.awt.Dimension(400, 500));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/LOGO.Trial 2.png"))); // NOI18N
-
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("© 2024 EasyPay All rights reserved. ");
 
@@ -89,88 +131,100 @@ public class SignUp extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setText("EasyPay");
 
-        javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
-        Right.setLayout(RightLayout);
-        RightLayout.setHorizontalGroup(
-            RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RightLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel5))
-                .addGap(136, 136, 136))
-            .addGroup(RightLayout.createSequentialGroup()
-                .addGap(110, 110, 110)
-                .addComponent(jLabel6)
-                .addContainerGap(112, Short.MAX_VALUE))
-        );
-        RightLayout.setVerticalGroup(
-            RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(RightLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 204, Short.MAX_VALUE)
-                .addComponent(jLabel6)
-                .addGap(134, 134, 134))
-        );
-
-        Left.add(Right);
-        Right.setBounds(0, 0, 410, 570);
-
-        lefttt.setPreferredSize(new java.awt.Dimension(400, 500));
-
         jLabel1.setBackground(new java.awt.Color(0, 102, 102));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("SIGN UP");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("First Name");
 
-        Fname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FnameActionPerformed(evt);
-            }
-        });
-
-        Email.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmailActionPerformed(evt);
-            }
-        });
-        Email.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                EmailKeyTyped(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Last Name");
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("Email");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("City:");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Country:");
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel18.setText("National ID:");
+
+        Bar.setBackground(new java.awt.Color(255, 255, 255));
+        Bar.setForeground(new java.awt.Color(0, 102, 102));
+        Bar.setBorder(null);
+        Bar.setBorderPainted(false);
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Password");
+
+        Lname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        Lname.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        Lname.setSelectedTextColor(new java.awt.Color(242, 242, 242));
         Lname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LnameActionPerformed(evt);
             }
         });
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel9.setText("Email");
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel10.setText("Password");
-
-        jLabel4.setText("Already have an account? ");
-
-        jXHyperlink1.setForeground(new java.awt.Color(0, 102, 102));
-        jXHyperlink1.setText("Log In");
-        jXHyperlink1.addActionListener(new java.awt.event.ActionListener() {
+        Fname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        Fname.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        Fname.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        Fname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jXHyperlink1ActionPerformed(evt);
+                FnameActionPerformed(evt);
             }
         });
 
+        city.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        city.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        city.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        city.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cityActionPerformed(evt);
+            }
+        });
+
+        Email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        Email.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        Email.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        Email.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                EmailActionPerformed(evt);
+            }
+        });
+
+        ID.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        ID.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        ID.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        ID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IDActionPerformed(evt);
+            }
+        });
+
+        country.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        country.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        country.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        country.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                countryActionPerformed(evt);
+            }
+        });
+
+        Password.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        Password.setSelectedTextColor(new java.awt.Color(242, 242, 242));
         Password.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PasswordMouseClicked(evt);
@@ -187,114 +241,412 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
-        jLabel14.setFont(new java.awt.Font("Forte", 0, 24)); // NOI18N
-        jLabel14.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel14.setText("X");
-        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+        togbtn1.setText("Show");
+        togbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel14MouseClicked(evt);
+                togbtn1MouseClicked(evt);
             }
         });
 
-        Bar.setBackground(new java.awt.Color(255, 255, 255));
-        Bar.setForeground(new java.awt.Color(0, 102, 102));
+        mess.setForeground(new java.awt.Color(153, 153, 153));
 
-        kButton2.setForeground(new java.awt.Color(204, 102, 0));
-        kButton2.setText("Next");
-        kButton2.setActionCommand("Next");
-        kButton2.setkBackGroundColor(new java.awt.Color(255, 102, 102));
-        kButton2.setkBorderRadius(25);
-        kButton2.setkEndColor(new java.awt.Color(255, 255, 51));
-        kButton2.setkHoverEndColor(new java.awt.Color(0, 102, 102));
-        kButton2.setkStartColor(new java.awt.Color(0, 102, 102));
-        kButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        Verify.setText("Verify");
+        Verify.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                kButton2MouseClicked(evt);
+                VerifyMouseClicked(evt);
             }
         });
-        kButton2.addActionListener(new java.awt.event.ActionListener() {
+
+        verifo.setText("Verification Code");
+
+        Verify1.setText("Confirm");
+        Verify1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                Verify1MouseClicked(evt);
+            }
+        });
+
+        mess1.setForeground(new java.awt.Color(153, 153, 153));
+
+        javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
+        Right.setLayout(RightLayout);
+        RightLayout.setHorizontalGroup(
+            RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RightLayout.createSequentialGroup()
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addGap(122, 122, 122)
+                        .addComponent(jLabel1))
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addGap(103, 103, 103)
+                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(mess1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(verifo, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Fname, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Lname, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Email, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Verify, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(Verify1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(togbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel18)
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addComponent(jLabel13)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel12)
+                                .addGap(12, 12, 12)
+                                .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(mess, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(Bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(10, Short.MAX_VALUE))
+        );
+        RightLayout.setVerticalGroup(
+            RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RightLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
+                .addGap(0, 0, 0)
+                .addComponent(Fname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel8)
+                .addGap(0, 0, 0)
+                .addComponent(Lname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
+                .addComponent(jLabel9)
+                .addGap(0, 0, 0)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Verify, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(verifo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Verify1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mess1, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addComponent(jLabel18)
+                .addGap(0, 0, 0)
+                .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel12))
+                .addGap(0, 0, 0)
+                .addComponent(jLabel10)
+                .addGap(0, 0, 0)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(togbtn1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel6)
+                .addGap(67, 67, 67))
+        );
+
+        Left.add(Right);
+        Right.setBounds(0, 0, 410, 720);
+
+        lefttt.setPreferredSize(new java.awt.Dimension(400, 500));
+
+        jLabel4.setText("Already have an account? ");
+
+        jXHyperlink1.setForeground(new java.awt.Color(0, 102, 102));
+        jXHyperlink1.setText("Log In");
+        jXHyperlink1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton2ActionPerformed(evt);
+                jXHyperlink1ActionPerformed(evt);
             }
         });
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel3.setText("Account Type:");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel5.setText("Card Number:");
+
+        jLabel11.setFont(new java.awt.Font("Sitka Display", 0, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel11.setText("(Your 16-digit Card number)");
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI Historic", 1, 14)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel15.setText("Expiry Date:");
+
+        expire_date.setToolTipText("Cvv");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yy");
+        expire_date.setFormats(dateFormat);
+        expire_date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                expire_dateActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel16.setText("CVV:");
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel17.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel17.setText("ATM PIN:");
+
+        jLabel19.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel19.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel19.setText("Gender:");
+
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel20.setText("Mobile Number:");
+
+        jLabel21.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel21.setText("Address:");
+
+        signup.setForeground(new java.awt.Color(204, 102, 0));
+        signup.setText("Sign Up");
+        signup.setkBackGroundColor(new java.awt.Color(255, 102, 102));
+        signup.setkBorderRadius(25);
+        signup.setkEndColor(new java.awt.Color(255, 255, 51));
+        signup.setkHoverEndColor(new java.awt.Color(0, 102, 102));
+        signup.setkSelectedColor(new java.awt.Color(0, 102, 102));
+        signup.setkStartColor(new java.awt.Color(0, 102, 102));
+        signup.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                signupMouseClicked(evt);
+            }
+        });
+        signup.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                signupActionPerformed(evt);
+            }
+        });
+
+        jLabel22.setFont(new java.awt.Font("Forte", 0, 24)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel22.setText("X");
+        jLabel22.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel22MouseClicked(evt);
+            }
+        });
+
+        atm_pin.setBackground(new Color(0,0,0,0));
+        atm_pin.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        atm_pin.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        atm_pin.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        atm_pin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                atm_pinActionPerformed(evt);
+            }
+        });
+
+        card_no.setBackground(new Color(0,0,0,0));
+        card_no.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        card_no.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        card_no.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        card_no.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                card_noActionPerformed(evt);
+            }
+        });
+
+        cvv.setBackground(new Color(0,0,0,0));
+        cvv.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        cvv.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        cvv.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        cvv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cvvActionPerformed(evt);
+            }
+        });
+
+        mob_no.setBackground(new Color(0,0,0,0));
+        mob_no.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        mob_no.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        mob_no.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        mob_no.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mob_noActionPerformed(evt);
+            }
+        });
+
+        add.setBackground(new Color(0,0,0,0));
+        add.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        add.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        add.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        add.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addActionPerformed(evt);
+            }
+        });
+
+        AccountType.setFont(new java.awt.Font("DialogInput", 3, 12)); // NOI18N
+
+        AccountType.add("Saving Account");
+        AccountType.add("Fixed Deposit Account");
+        AccountType.add("Current Account");
+        AccountType.add("recurring Deposit Account");
+        Gender.setFont(new java.awt.Font("DialogInput", 3, 12)); // NOI18N
+        Gender.addItem("Female");
+        Gender.addItem("Male");
+        Gender.addItem("Prefer Not to say");
 
         javax.swing.GroupLayout leftttLayout = new javax.swing.GroupLayout(lefttt);
         lefttt.setLayout(leftttLayout);
         leftttLayout.setHorizontalGroup(
             leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
             .addGroup(leftttLayout.createSequentialGroup()
-                .addGap(35, 35, 35)
+                .addContainerGap()
                 .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(leftttLayout.createSequentialGroup()
-                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(Bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(leftttLayout.createSequentialGroup()
+                            .addComponent(jLabel4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(leftttLayout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
                             .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(leftttLayout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(72, 72, 72))
-                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, leftttLayout.createSequentialGroup()
-                                        .addComponent(jLabel4)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(Lname, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Fname, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(Email, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(Password, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 296, Short.MAX_VALUE))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
-                        .addComponent(jLabel14)
-                        .addGap(0, 19, Short.MAX_VALUE))
+                                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(leftttLayout.createSequentialGroup()
+                                            .addComponent(jLabel19)
+                                            .addGap(75, 75, 75))
+                                        .addGroup(leftttLayout.createSequentialGroup()
+                                            .addComponent(jLabel20)
+                                            .addGap(18, 18, 18)))
+                                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(mob_no, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                                        .addComponent(jLabel21)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel17)
+                                            .addComponent(jLabel16))
+                                        .addGap(62, 62, 62)
+                                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cvv, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                            .addComponent(atm_pin, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                            .addComponent(expire_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
                     .addGroup(leftttLayout.createSequentialGroup()
+                        .addGap(6, 6, 6)
                         .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addGroup(leftttLayout.createSequentialGroup()
+                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(card_no, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(62, Short.MAX_VALUE))
         );
         leftttLayout.setVerticalGroup(
             leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(leftttLayout.createSequentialGroup()
                 .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47))
                     .addGroup(leftttLayout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(jLabel1))
-                    .addGroup(leftttLayout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(16, 16, 16)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Fname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Lname, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel9)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Email, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(kButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                        .addGap(71, 71, 71)
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3))
+                        .addGap(27, 27, 27)))
                 .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(99, Short.MAX_VALUE))
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(card_no, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(leftttLayout.createSequentialGroup()
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(expire_date, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(cvv, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel16))
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(leftttLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel17))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addComponent(atm_pin, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(leftttLayout.createSequentialGroup()
+                                .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                                .addComponent(jLabel21)
+                                .addGap(18, 18, 18)))
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(mob_no, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel20))
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel19))
+                    .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(leftttLayout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(leftttLayout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(251, Short.MAX_VALUE))
         );
 
         Left.add(lefttt);
-        lefttt.setBounds(410, -30, 390, 600);
+        lefttt.setBounds(410, -30, 390, 750);
 
         getContentPane().add(Left);
         Left.setBounds(0, 0, 800, 570);
@@ -303,71 +655,125 @@ public class SignUp extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EmailActionPerformed
-
-    private void LnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LnameActionPerformed
-
-    private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
-        // TODO add your handling code here:
-       
-    }//GEN-LAST:event_PasswordActionPerformed
-
     private void jXHyperlink1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXHyperlink1ActionPerformed
         // TODO add your handling code here:  Login LoginFrame = new Login();
         Login LoginFrame = new Login();
         LoginFrame.setVisible(true);
-      
+
         LoginFrame.pack();
         LoginFrame.setLocationRelativeTo(null);
         this.dispose();
     }//GEN-LAST:event_jXHyperlink1ActionPerformed
 
-    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+    private void expire_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expire_dateActionPerformed
+        // TODO add your handling code here:
+//        String Expiredate=new String();
+//        java.util.Date selectedDate = expire_date.getDate();
+//        if (selectedDate != null) {
+//            // selectedDate is not null, so you can safely invoke methods on it
+//            Expiredate= selectedDate.toString();
+//            // Use dateString as needed
+//        } else {
+//            // selectedDate is null, handle this case appropriately
+//            System.out.println("Error: selectedDate is null");
+//            // Display an error message or take other appropriate action
+//        }
+//         Expiredate=Expiredate.substring(0,5)
+//
+//        expire_date.set
+    }//GEN-LAST:event_expire_dateActionPerformed
+
+    private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
+
+    }//GEN-LAST:event_signupActionPerformed
+
+    private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
         // TODO add your handling code here:
         System.exit(0);
-    }//GEN-LAST:event_jLabel14MouseClicked
+    }//GEN-LAST:event_jLabel22MouseClicked
 
-    private void PasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PasswordMouseClicked
+    private void LnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_LnameActionPerformed
 
-    }//GEN-LAST:event_PasswordMouseClicked
+    private void FnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FnameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FnameActionPerformed
+
+    private void cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cityActionPerformed
+
+    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_EmailActionPerformed
+
+    private void IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_IDActionPerformed
+
+    private void countryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_countryActionPerformed
+
+    private void atm_pinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atm_pinActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_atm_pinActionPerformed
+
+    private void card_noActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_card_noActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_card_noActionPerformed
+
+    private void cvvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cvvActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cvvActionPerformed
+
+    private void mob_noActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mob_noActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mob_noActionPerformed
+
+    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addActionPerformed
+
+    private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PasswordActionPerformed
 
     private void PasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordKeyTyped
-           String pass =Password.getText();
-            
-            if(!PatternChecker.MatchPattern8Num(pass))
+        // TODO add your handling code here:
+             char[] passChars = Password.getPassword();
+             String pass = new String(passChars);
+
+            if(PatternChecker.MatchPattern(pass))
+            {
+                mess.setText("password accepted");
+                Bar.setValue(100);
+                Bar.setBackground(Color.green);
+                Bar.repaint();
+            }
+            else if(!PatternChecker.MatchPatternSchars(pass)&&PatternChecker.MatchPatternchars(pass)&&PatternChecker.MatchPattern8Num(pass))
+            {
+                mess.setText("password must contain 1 special char");
+                Bar.setValue(68);
+            }
+            else if(!PatternChecker.MatchPatternSchars(pass)&&!PatternChecker.MatchPatternchars(pass)&&PatternChecker.MatchPattern8Num(pass))
+            {
+                mess.setText("password must contain 1 upper case and 1 lower case");
+                Bar.setValue(34);
+            }
+            else if(!PatternChecker.MatchPatternSchars(pass)&&!PatternChecker.MatchPatternchars(pass)&&!PatternChecker.MatchPattern8Num(pass))
             {
 //                nums.setBackground(new java.awt.Color(204, 0, 0));
                  mess.setText("password must contain 8 numbers");
             }
             else
             {
-                mess.setText(" ");
-                Bar.setValue(34);
+                mess.setText("password accepted");
+                Bar.setValue(100);
+                Bar.setBackground(Color.green);
+                Bar.repaint();
             }
-            if(!PatternChecker.MatchPatternchars(pass))
-            {
-                mess.setText("password must contain 2 upper case chars and 2 lower case chars");
-            }
-            else
-            {
-            mess.setText(" ");
-            Bar.setValue(68);
-            }
-            if(!PatternChecker.MatchPatternSchars(pass))
-            {
-                mess.setText("password must contain 1 special char");
-            }
-            else
-            {
-            mess.setText("password accepted");
-            Bar.setValue(100);
-            Bar.setBackground(Color.green);
-            }
-            
             if(pass.isEmpty())
             {
                 Bar.setValue(0);
@@ -375,57 +781,92 @@ public class SignUp extends javax.swing.JFrame {
             //nums.repaint();
     }//GEN-LAST:event_PasswordKeyTyped
 
-    private void EmailKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_EmailKeyTyped
+    private void signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupMouseClicked
         // TODO add your handling code here:
-            String pass =Email.getText();
-            if(!PatternChecker.MatchPattern8Num(pass))
-            {
-                //nums.setBackground(new java.awt.Color(204, 0, 0));
-            }
-            else 
-            {
-                //nums.setBackground(new java.awt.Color(102,255,102));
-            }
-             //nums.repaint();
-    }//GEN-LAST:event_EmailKeyTyped
+        LocalDate selectedDate = expire_date.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        String expireDateString = selectedDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
-    private void kButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton2ActionPerformed
-        // TODO add your handling code here:
-          SignUp2 SignUp2Frame = new SignUp2();
-        SignUp2Frame.setVisible(true);
-        SignUp2Frame.pack();
-        SignUp2Frame.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_kButton2ActionPerformed
-
-    private void FnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FnameActionPerformed
-
-    private void kButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kButton2MouseClicked
-        // TODO add your handling code here:
         String fname=Fname.getText();
         String lname=Lname.getText();
         String email=Email.getText();
-        String pass =Password.getText();
-        if(fname.isEmpty()||lname.isEmpty()||email.isEmpty()||pass.isEmpty())
+        char[] passChars = Password.getPassword();
+        String pass = new String(passChars);
+        String Nation_no=ID.getText();
+        String Country =country.getText();
+        String City=city.getText();
+        String AccType=AccountType.getSelectedItem();
+        String Card_no=card_no.getText();
+        String Cvv=cvv.getText();
+        String AtmPin=atm_pin.getText();
+        String FullAddress=add.getText();
+        String Mob_Num=mob_no.getText();
+        String Sex=Gender.getSelectedItem();
+
+
+        if(Sex.isEmpty()||Mob_Num.isEmpty()||FullAddress.isEmpty()||AtmPin.isEmpty()||Cvv.isEmpty()||expireDateString.isEmpty()||fname.isEmpty()||Card_no.isEmpty()||lname.isEmpty()||email.isEmpty()||pass.isEmpty()||Nation_no.isEmpty()||Country.isEmpty()||City.isEmpty()||AccType.isEmpty())
         {
             JOptionPane.showMessageDialog(this,"please enter the required fields");
         }
+        else if((Mob_Num.length())>12)
+        {
+            JOptionPane.showMessageDialog(this,"re-type your correct phone num");
+            mob_no.setText(" ");
+        }
+        else if((email.length())>29)
+        {
+            JOptionPane.showMessageDialog(this,"long email please provide me with a different one");
+            Email.setText(" ");
+        }
+        else if((Country.length())>10 || (City.length())>10)
+        {
+            JOptionPane.showMessageDialog(this,"re-enter a valid city");
+            country.setText(" ");
+            city.setText(" ");
+        }
+        else if((fname.length())>10 || (lname.length())>10)
+        {
+            JOptionPane.showMessageDialog(this,"re-enter a valid Names");
+            Fname.setText(" ");
+            Lname.setText(" ");
+        }
+        else if((Nation_no.length()) >15)
+        {
+            JOptionPane.showMessageDialog(this,"enter Egyptian national ids only");
+            ID.setText(" ");
+        }
+        else if(FullAddress.length()>15)
+        {
+            JOptionPane.showMessageDialog(this,"enter a real address");
+            add.setText(" ");
+        }
+        else if((Cvv.length()) >3)
+        {
+            JOptionPane.showMessageDialog(this,"enter a valid cvv of 3 digits");
+            cvv.setText(" ");
+        }
+        else if((AtmPin.length())>6)
+        {
+            JOptionPane.showMessageDialog(this,"enter a pin for atm of 6 digits");
+            atm_pin.setText(" ");
+        }
+        else if((Card_no.length())>6)
+        {
+            JOptionPane.showMessageDialog(this,"enter a card num of 6 digits");
+            card_no.setText(" ");
+        }
+        else if((pass.length())>50)
+        {
+            JOptionPane.showMessageDialog(this,"password limit is 50 chars");
+            Password.setText(" ");
+        }
         else
         {
-            if(fname.length()<4||lname.length()<4)
-            {
-                JOptionPane.showMessageDialog(this,"Name is too short");
-            }
-            else
-            {
                 StringTokenizer token =new StringTokenizer(email,"@");
-                String username=new String();
+                String fullmail=Email.getText();
                 String domain = new String();
                 if(token.hasMoreTokens())
                 {
-                    username=(String)token.nextElement();//user ie before @
+                    email=(String)token.nextElement();//user ie before @
                 }
                 while(token.hasMoreTokens())
                 {
@@ -437,173 +878,250 @@ public class SignUp extends javax.swing.JFrame {
                     domain=token2.nextToken();
                 }
 
-                /*************************/
+                /***************************************************************************/
 
                 domain=domain.toLowerCase();
 
-                if(!domain.equals("gmail"))
+            if(fname.length()<4||lname.length()<4)
+            {
+                JOptionPane.showMessageDialog(this,"Name is too short");
+            }
+            else if(!ValMail.EmailVal(fullmail))
+            {
+                JOptionPane.showMessageDialog(this,"email does not meet our standards");
+            }
+            else if(!domain.equals("gmail"))
+            {
+                JOptionPane.showMessageDialog(this,"we accept gmail only");
+            }
+            else if(!VerifiedEmail)
+            {
+                JOptionPane.showMessageDialog(this,"please verify you email");
+            }
+            else
+            {
+
+
+                int rs=0;
+                boolean fq=false;
+                try
                 {
-                    JOptionPane.showMessageDialog(this,"we accept gmail only");
+                    Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase?serverTimezone=UTC", "root", "123456");
+                    Statement stmt = con.createStatement();
+                    String sqlCommand ="insert into customers(fname,lname,national_id,mobile_no,email,Address,country,city,sex) VALUES(?,?,?,?,?,?,?,?,?);";
+                    PreparedStatement pstmt = con.prepareStatement(sqlCommand);
+                    Mob_Num=Mob_Num.substring(2,Mob_Num.length());
+                    Mob_Num=Mob_Num.trim();
+                    if(Sex.equals("Female"))
+                    {
+                        Sex="f";
+                    }
+                    else if(Sex.equals("Male"))
+                    {
+                        Sex="m";
+                    }
+                    else if(Sex.equals("Prefer not to say"))
+                    {
+                        Sex="o";
+                    }
+                    else
+                    {
+                        Sex="s";
+                    }
+                    pstmt.setString(1, fname);
+                    pstmt.setString(2, lname);
+                    pstmt.setString(3, Nation_no);
+                    pstmt.setString(4, Mob_Num);
+                    pstmt.setString(5, email);
+                    pstmt.setString(6, FullAddress);
+                    pstmt.setString(7, Country);
+                    pstmt.setString(8, City);
+                    pstmt.setString(9, Sex);
+
+                    rs = pstmt.executeUpdate();
+
+
+                    fq=true;
+                // Close the ResultSet, Statement, and Connection
                 }
-                else
+                catch (Exception e)
                 {
+                    JOptionPane.showMessageDialog(this,e);
+                    System.out.println(e.getMessage());
+                    System.out.println("first");
+                }
 
-                    String newCardNumber =new String();
-                    String maxStr="0";
-                    String newCardNumber2=new String();
 
+
+                /************************************************************************************************/
+                if(fq)
+                {
                     try
                     {
                         Class.forName("com.mysql.cj.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
+                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase?serverTimezone=UTC", "root", "123456");
                         Statement stmt = con.createStatement();
-                        String sqlCommand ="SELECT MAX(national_id) as e FROM customers;";
+                        String sqlCommand = "INSERT INTO account (card_number, cvv, national_no, acc_pass, atm_pin, acc_category, expire_date, balance) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
                         PreparedStatement pstmt = con.prepareStatement(sqlCommand);
-                        ResultSet rs2 = pstmt.executeQuery();
 
-                        try
+                        String accType=new String();
+
+                        if(AccType.equals("Saving Account"))
                         {
-                            if (rs2.next()) {
-                                // Fetch the value from ResultSet
-                                String nationalId = rs2.getString("e");
-                                System.out.println("Retrieved national_id: " + nationalId); // Log the retrieved value
-
-                                // Check if nationalId is not null and not empty
-                                maxStr = nationalId.substring(1);
-                            }
+                            accType="s";
                         }
-                        catch(Exception e)
+                        else if(AccType.equals("Fixed Deposit Account"))
                         {
-                            JOptionPane.showMessageDialog(this,"first");
-                            JOptionPane.showMessageDialog(this,e);
+                            accType="f";
                         }
-                        finally
+                        else if(AccType.equals("Current Account"))
                         {
-                            newCardNumber = (Integer.toString(Integer.parseInt(maxStr) + 1));
-                            System.out.println("new national_id: " + newCardNumber);
+                            accType="c";
+                        }
+                        else if(AccType.equals("recurring Deposit Account"))
+                        {
+                            accType="r";
                         }
 
-                        // Close the ResultSet, Statement, and Connection
-                    }
-                    catch (Exception e)
-                    {
-                        JOptionPane.showMessageDialog(this,e);
-                    }
+                        pstmt.setString(1, Card_no);
+                        pstmt.setString(2, Cvv);
+                        pstmt.setString(3, Nation_no);
+                        pstmt.setString(4, pass);
+                        pstmt.setString(5, AtmPin);
+                        pstmt.setString(6, accType);
+                        pstmt.setString(7,expireDateString);
+                        pstmt.setString(8, "0");
 
-                    /********************************/
 
-                    try
-                    {
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
-                        Statement stmt = con.createStatement();
-                        String sqlCommand = "INSERT INTO customers(Fname, lname, email, national_id,mobile_no,Address,date_birth) VALUES(?,?,?,?,?,?,?);"; // Replace "your_table_name" with the actual table name
-                        PreparedStatement pstmt = con.prepareStatement(sqlCommand);
-
-                        pstmt.setString(1, Fname.getText());
-                        pstmt.setString(2, Lname.getText());
-                        pstmt.setString(3, username);
-                        pstmt.setString(4,newCardNumber);
-                        pstmt.setString(5,Integer.toString(01022473));
-                        pstmt.setString(6,Integer.toString(0));
-                        String dateOfBirth = "2002-06-25";
-                        java.sql.Date sqlDate = java.sql.Date.valueOf(dateOfBirth);
-                        pstmt.setDate(7, sqlDate);
-                        int rs = pstmt.executeUpdate();
-                    }
-                    catch(Exception e)
-                    {
-                        JOptionPane.showMessageDialog(this,"second");
-                        JOptionPane.showMessageDialog(this,e);
-
-                    }
-
-                    try{
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
-                        Statement stmt = con.createStatement();
-                        String sqlCommand = "SELECT MAX(card_number) as e FROM account;";
-                        PreparedStatement pstmt = con.prepareStatement(sqlCommand);
-                        maxStr=new String();
-                        pstmt = con.prepareStatement(sqlCommand);
-                        ResultSet rs2 = pstmt.executeQuery();
-
-                        if (rs2.next()) {
-                            // Fetch the value from ResultSet
-                            maxStr = rs2.getString("e"); // Ensure the column name is quoted properly
-
-                            // Log the retrieved value for debugging
-                            System.out.println("Retrieved max card number: " + maxStr);
-
-                            // Check if maxStr is not null
-                            if (maxStr != null && !maxStr.isEmpty()) {
-                                // Invoke substring method on maxStr
-                                maxStr = maxStr.substring(1);
-                                // Further operations with the substring...
-                            } else {
-                                // Handle the case where maxStr is null or empty
-                                maxStr = "0";
-                            }
-                        }
-
-                        // Increment the maximum card number and construct the new card number
-                        newCardNumber2 = "C" + (Integer.parseInt(maxStr) + 1);
-
-                    } catch (Exception e) {
-                        // Log any exceptions for debugging
-                        JOptionPane.showMessageDialog(this, "third" );
-                        JOptionPane.showMessageDialog(this, "Error occurred: " + e.getMessage());
-                        e.printStackTrace();
-                    }
-
-                    // Increment the maximum card number and construct the new card number
-                    newCardNumber2 = ("C"+Integer.toString(Integer.parseInt(maxStr) + 1));
-
-                    /********************************/
-
-                    try {
-                        // Establish database connection
-                        Class.forName("com.mysql.cj.jdbc.Driver");
-                        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase", "root", "123456");
-
-                        // Prepare INSERT statement
-                        String sqlCommand = "INSERT INTO account (card_number, acc_pass, national_no, balance, acc_category, exipre_date, cvv, atm_pin) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                        PreparedStatement pstmt = con.prepareStatement(sqlCommand);
-
-                        // Set parameter values
-                        pstmt.setString(1, newCardNumber2);
-                        pstmt.setString(2, pass);
-                        pstmt.setString(3, newCardNumber);
-                        pstmt.setInt(4, 0); // Assuming balance is an integer column
-                        pstmt.setString(5, "s");
-                        java.sql.Date sqlDate = java.sql.Date.valueOf("2002-06-25");
-                        pstmt.setDate(6, sqlDate);
-                        pstmt.setString(7, "0");
-                        pstmt.setString(8, "000000");
-
-                        // Execute the statement
-                        int rowsAffected = pstmt.executeUpdate();
+                        pstmt.executeUpdate();
 
                         // Close resources
                         pstmt.close();
                         con.close();
 
-                        // Dispose current frame and open new frame
-                        this.dispose();
-                        SignUp2 SignUp2Frame = new SignUp2();
-                        SignUp2Frame.setVisible(true);
-                        SignUp2Frame.pack();
-                        SignUp2Frame.setLocationRelativeTo(null);
 
-                    } catch (Exception e) {
-                        JOptionPane.showMessageDialog(this, "Error occurred: " + e.getMessage());
-                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(this,"Signed up successfully");
+
+
+                    // Close the ResultSet, Statement, and Connection
                     }
-
+                    catch (Exception e)
+                    {
+                        JOptionPane.showMessageDialog(this,e);
+                        System.out.println(e.getMessage());
+                        System.out.println("second");
+                    }
                 }
+
+//                       this.dispose();
+//                       SignUp2 SignUp2Frame = new SignUp2();
+//                       SignUp2Frame.setVisible(true);
+//                       SignUp2Frame.pack();
+//                       SignUp2Frame.setLocationRelativeTo(null);
             }
         }
-    }//GEN-LAST:event_kButton2MouseClicked
+    }//GEN-LAST:event_signupMouseClicked
+
+    private void togbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_togbtn1MouseClicked
+        // TODO add your handling code here:
+        if(togbtn1.isSelected())
+        {
+            Password.setEchoChar((char)0);
+            togbtn1.setText("Hide");
+        }
+        else
+        {
+            Password.setEchoChar('*');
+            togbtn1.setText("Show");
+        }
+    }//GEN-LAST:event_togbtn1MouseClicked
+
+    private void PasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PasswordMouseClicked
+        // TODO add your handling code here:
+        mess.setText(" ");
+    }//GEN-LAST:event_PasswordMouseClicked
+
+    private void VerifyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VerifyMouseClicked
+        // TODO add your handling code here:
+        boolean flag=true;
+        StringTokenizer email = new StringTokenizer(Email.getText().trim(),"@");
+        String emailo=new String();
+        if(email.hasMoreElements())
+        {
+            emailo=(String)email.nextToken();
+        }
+        try{
+           // Load the MySQL JDBC driver
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            // Establish a connection to the database
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase?serverTimezone=UTC", "root", "123456");
+
+            // Prepare SQL statement
+            String sqlCommand = "SELECT email FROM customers;";
+            PreparedStatement pstmt = con.prepareStatement(sqlCommand);
+
+            // Execute the query
+            ResultSet rs = pstmt.executeQuery();
+
+            // Process the result set
+            while (rs.next()) {
+                // Retrieve the email from the ResultSet
+                String emailFromDB = rs.getString("email");
+
+                // Perform the comparison
+                if (emailFromDB.equals(emailo)) {
+                    // If the email from the database matches emailo, set flag to false and exit the loop
+                    flag = false;
+                    break;
+                }
+            }
+
+            // Close resources
+            rs.close();
+            pstmt.close();
+            con.close();
+        }
+        catch(ClassNotFoundException | SQLException e)
+        {
+            e.printStackTrace();
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(this,e.getMessage());
+        }
+        if(flag){
+            ValMail.sendEmail(Email.getText().trim(),"Verification",RandomCode);
+        }
+        else
+        {
+            JOptionPane.showMessageDialog(this,"please enter a different email as this email is already used");
+        }
+    }//GEN-LAST:event_VerifyMouseClicked
+
+    private void Verify1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Verify1MouseClicked
+        // TODO add your handling code here:
+        String EnteredCode=verifo.getText().trim();
+        
+        if(Cou<3)
+        {
+            if(!EnteredCode.equals(RandomCode))
+            {
+                mess1.setText("wrong code");
+                Cou++;
+            }
+            else
+            {
+                mess1.setText("right code");
+                VerifiedEmail=true;
+            }
+        }
+        else
+        {
+            mess1.setText("Please enter a different mail as you entered the code worng for 3 times");
+        }
+    }//GEN-LAST:event_Verify1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -612,7 +1130,7 @@ public class SignUp extends javax.swing.JFrame {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
@@ -641,17 +1159,40 @@ public class SignUp extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private java.awt.Choice AccountType;
     private javax.swing.JProgressBar Bar;
     private javax.swing.JTextField Email;
     private javax.swing.JTextField Fname;
+    private java.awt.Choice Gender;
+    private javax.swing.JTextField ID;
     private javax.swing.JPanel Left;
     private javax.swing.JTextField Lname;
     private javax.swing.JPasswordField Password;
     private javax.swing.JPanel Right;
+    private com.k33ptoo.components.KButton Verify;
+    private com.k33ptoo.components.KButton Verify1;
+    private javax.swing.JTextField add;
+    private javax.swing.JTextField atm_pin;
+    private javax.swing.JTextField card_no;
+    private javax.swing.JTextField city;
+    private javax.swing.JTextField country;
+    private javax.swing.JTextField cvv;
+    private org.jdesktop.swingx.JXDatePicker expire_date;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -659,8 +1200,12 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private org.jdesktop.swingx.JXHyperlink jXHyperlink1;
-    private com.k33ptoo.components.KButton kButton2;
     private javax.swing.JPanel lefttt;
     private javax.swing.JLabel mess;
+    private javax.swing.JLabel mess1;
+    private javax.swing.JTextField mob_no;
+    private com.k33ptoo.components.KButton signup;
+    private javax.swing.JToggleButton togbtn1;
+    private javax.swing.JTextField verifo;
     // End of variables declaration//GEN-END:variables
 }
