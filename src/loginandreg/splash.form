@@ -55,7 +55,6 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="Bar" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -76,6 +75,7 @@
                   </Group>
                   <EmptySpace pref="113" max="32767" attributes="0"/>
               </Group>
+              <Component id="Bar" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -87,9 +87,9 @@
                   <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                   <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                  <Component id="Bar" min="-2" pref="12" max="-2" attributes="0"/>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+                  <Component id="Bar" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="Prec" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               </Group>
@@ -123,12 +123,6 @@
             <Property name="text" type="java.lang.String" value="EasyPay"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JProgressBar" name="Bar">
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JProgressBar()"/>
-            <AuxValue name="JavaCodeGenerator_SerializeTo" type="java.lang.String" value="splash_Bar"/>
-          </AuxValues>
-        </Component>
         <Component class="javax.swing.JLabel" name="Prec">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -136,6 +130,16 @@
             </Property>
             <Property name="text" type="java.lang.String" value="0"/>
           </Properties>
+        </Component>
+        <Component class="loginandreg.ProgressBarCustom" name="Bar">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="ff" red="33" type="rgb"/>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="Bar.setStringPainted(false);"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>

@@ -13,7 +13,7 @@ import loginandreg.ValMail;
 public class Login extends javax.swing.JFrame {
 
     int Cou = 0;
-
+    public static String WelcomeUserName=new String();
     /**
      * Creates new form Login
      */
@@ -121,38 +121,18 @@ public class Login extends javax.swing.JFrame {
         Email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         Email.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         Email.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        Email.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmailActionPerformed(evt);
-            }
-        });
 
         Pass.setBackground(new Color(0,0,0,0));
         Pass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         Pass.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        Pass.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                PassMouseMoved(evt);
-            }
-        });
-        Pass.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                PassMousePressed(evt);
-            }
-        });
-        Pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PassActionPerformed(evt);
-            }
-        });
 
         jLabel4.setText("New to the App?");
 
         jXHyperlink1.setForeground(new java.awt.Color(0, 102, 102));
         jXHyperlink1.setText("Sign Up");
-        jXHyperlink1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jXHyperlink1ActionPerformed(evt);
+        jXHyperlink1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jXHyperlink1MouseClicked(evt);
             }
         });
 
@@ -175,11 +155,6 @@ public class Login extends javax.swing.JFrame {
         kButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 kButton1MouseClicked(evt);
-            }
-        });
-        kButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                kButton1ActionPerformed(evt);
             }
         });
 
@@ -280,39 +255,10 @@ public class Login extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void PassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PassActionPerformed
-
-    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EmailActionPerformed
-
-    private void jXHyperlink1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jXHyperlink1ActionPerformed
-        // TODO add your handling code here:SignUp SignUpFrame = new SignUp();
-        SignUp SignUpFrame = new SignUp();
-        SignUpFrame.setVisible(true);
-        SignUpFrame.pack();
-        SignUpFrame.setLocationRelativeTo(null);
-        this.dispose();
-    }//GEN-LAST:event_jXHyperlink1ActionPerformed
-
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jLabel8MouseClicked
-
-    private void kButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton1ActionPerformed
-       
-    }//GEN-LAST:event_kButton1ActionPerformed
-
-    private void PassMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PassMouseMoved
-
-    }//GEN-LAST:event_PassMouseMoved
-
-    private void PassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PassMousePressed
-
-    }//GEN-LAST:event_PassMousePressed
 
     private void togbtn1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_togbtn1MouseClicked
         // TODO add your handling code here:
@@ -347,7 +293,7 @@ public class Login extends javax.swing.JFrame {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/BankDatabase?serverTimezone=UTC", "root", "123456");
             Statement stmt = con.createStatement();  
-            String sqlCommand = "SELECT email, national_id, acc_pass FROM customers JOIN account ON customers.national_id = account.national_no WHERE email = ?";
+            String sqlCommand = "SELECT email, national_id,fname, acc_pass FROM customers JOIN account ON customers.national_id = account.national_no WHERE email = ?";
             PreparedStatement pstmt = con.prepareStatement(sqlCommand);   
             pstmt.setString(1, email);
             ResultSet rs = pstmt.executeQuery();
@@ -356,10 +302,14 @@ public class Login extends javax.swing.JFrame {
            
             do {
                 if (pass.equals(rs.getString("acc_pass"))) {
-                    JOptionPane.showMessageDialog(this, "Welcome!");
-                    new SignUp().setVisible(true);
+                    WelcomeUserName=rs.getString("fname");
+                    JOptionPane.showMessageDialog(this, "Correct password \nWelcome "+WelcomeUserName+" !");
                     this.setVisible(false);
                     this.dispose();
+                    Dash DashFrame= new Dash();
+                    DashFrame.setVisible(true);
+                    DashFrame.WELCOMING.setText(WelcomeUserName);
+                    
                     break;
                 } else {
                     Cou++;
@@ -381,9 +331,19 @@ public class Login extends javax.swing.JFrame {
             catch (Exception e)
             {
              JOptionPane.showMessageDialog(this,e.getMessage());
+             System.out.println(e.getMessage());
             }
 
     }//GEN-LAST:event_kButton1MouseClicked
+
+    private void jXHyperlink1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jXHyperlink1MouseClicked
+        // TODO add your handling code here:
+         SignUp SignUpFrame = new SignUp();
+        SignUpFrame.setVisible(true);
+        SignUpFrame.pack();
+        SignUpFrame.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jXHyperlink1MouseClicked
 
     /**
      * @param args the command line arguments

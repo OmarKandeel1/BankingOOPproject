@@ -29,8 +29,8 @@ public class splash extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        Bar = new javax.swing.JProgressBar();
         Prec = new javax.swing.JLabel();
+        Bar = new loginandreg.ProgressBarCustom();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -52,11 +52,13 @@ public class splash extends javax.swing.JFrame {
         Prec.setFont(new java.awt.Font("Bradley Hand ITC", 2, 24)); // NOI18N
         Prec.setText("0");
 
+        Bar.setStringPainted(false);
+        Bar.setForeground(new java.awt.Color(51, 255, 51));
+
         javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Bar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(RightLayout.createSequentialGroup()
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(RightLayout.createSequentialGroup()
@@ -71,6 +73,7 @@ public class splash extends javax.swing.JFrame {
                         .addGap(184, 184, 184)
                         .addComponent(Prec, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(113, Short.MAX_VALUE))
+            .addComponent(Bar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         RightLayout.setVerticalGroup(
             RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,9 +84,9 @@ public class splash extends javax.swing.JFrame {
                 .addComponent(jLabel7)
                 .addGap(97, 97, 97)
                 .addComponent(jLabel6)
-                .addGap(28, 28, 28)
-                .addComponent(Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(31, 31, 31)
+                .addComponent(Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Prec)
                 .addGap(0, 0, 0))
         );
@@ -134,7 +137,7 @@ public class splash extends javax.swing.JFrame {
         //</editor-fold>
       // splash splashFrame= new splash();
         splash sc= new splash();
-                sc.setLocationRelativeTo(null);
+        sc.setLocationRelativeTo(null);
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -165,7 +168,7 @@ public class splash extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JProgressBar Bar;
+    private loginandreg.ProgressBarCustom Bar;
     private javax.swing.JLabel Prec;
     private javax.swing.JPanel Right;
     private javax.swing.JLabel jLabel5;

@@ -4,6 +4,8 @@
  */
 package loginandreg;
 
+import java.awt.Graphics;
+import java.awt.Insets;
 import com.mysql.cj.protocol.Resultset;
 import java.awt.Color;
 import java.sql.Connection;
@@ -13,6 +15,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Insets;
+import java.awt.event.ItemEvent;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -32,6 +37,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.plaf.basic.BasicProgressBarUI;
+import javax.swing.text.Document;
+import loginandreg.PatternChecker;
 
 
 /**
@@ -43,13 +53,123 @@ public class SignUp extends javax.swing.JFrame {
     boolean VerifiedEmail=false;
     String RandomCode=ValMail.generateRandomCode(6);
     int Cou=0;
+    boolean confirmedpassword=false;
+    
+     private void addPasswordListener() {
+        Document doc = Password.getDocument();
+        doc.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                handlePasswordChange();
+            }
 
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                handlePasswordChange();
+            }
 
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                handlePasswordChange();
+            }
+        });
+    }
+    
+    private void addPassword2Listener() {
+        Document doc = Password2.getDocument();
+        doc.addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                handlePassword2Change();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                handlePassword2Change();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                handlePassword2Change();
+            }
+        });
+    }
+    
+      private void handlePassword2Change(){
+        char[] passChars = Password2.getPassword();
+        String pass = new String(passChars).trim();
+        pass=pass.trim();
+        
+        
+        char[] passChars2 = Password.getPassword();
+        String pass2 = new String(passChars2).trim();
+        pass2=pass2.trim();
+        
+        System.out.println("password : "+pass2+"\n");
+
+        System.out.println("confirm password : "+pass+"\n");
+        if(pass.equals(pass2))
+        {
+            mess.setText("password mathced");
+            confirmedpassword=true;
+        }
+        else
+        {
+            mess.setText("password are not matched");
+        }
+      }
+      
+      
+    private void handlePasswordChange() {
+        char[] passChars = Password.getPassword();
+        String pass = new String(passChars).trim();
+        System.out.println("password : " +pass+"\n");
+        pass=pass.trim();
+       if(PatternChecker.MatchPattern(pass))
+       {
+           Bar.setColor(Color.GREEN); // Set the color of the progress bar
+           mess.setText("password accepted");
+           Bar.setValue(100);
+       }
+       else if(!PatternChecker.MatchPatternSchars(pass)&&PatternChecker.MatchPatternchars(pass)&&PatternChecker.MatchPattern8Num(pass))
+       {
+           Bar.setColor(new java.awt.Color(255, 0, 51));
+           mess.setText("password must contain 1 special char");
+           Bar.setValue(68);
+       }
+       else if(!PatternChecker.MatchPatternSchars(pass)&&!PatternChecker.MatchPatternchars(pass)&&PatternChecker.MatchPattern8Num(pass))
+       {
+           mess.setText("password must contain 1 upper case and 1 lower case");
+           Bar.setColor(new java.awt.Color(255, 0, 51));
+           Bar.setValue(34);
+       }
+       else if(!PatternChecker.MatchPatternSchars(pass)&&!PatternChecker.MatchPatternchars(pass)&&!PatternChecker.MatchPattern8Num(pass))
+       {
+    //                nums.setBackground(new java.awt.Color(204, 0, 0));
+            Bar.setColor(new java.awt.Color(255, 0, 51));
+            mess.setText("password must contain 8 numbers");
+       }
+       else {
+    //                System.out.println("color changed");
+           Bar.setColor(Color.GREEN); // Set the color of the progress bar
+           mess.setText("password accepted");
+           Bar.setValue(100);
+       }
+
+       if(pass.isEmpty())
+       {
+           Bar.setValue(0);
+       }
+    }
     /**
      * Creates new form SignUp
      */
     public SignUp() {
         initComponents();
+
+
+        addPasswordListener();
+        addPassword2Listener();
     }
 
     /**
@@ -69,17 +189,12 @@ public class SignUp extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        Bar = new javax.swing.JProgressBar();
         jLabel10 = new javax.swing.JLabel();
         Lname = new javax.swing.JTextField();
         Fname = new javax.swing.JTextField();
-        city = new javax.swing.JTextField();
         Email = new javax.swing.JTextField();
         ID = new javax.swing.JTextField();
-        country = new javax.swing.JTextField();
         Password = new javax.swing.JPasswordField();
         togbtn1 = new javax.swing.JToggleButton();
         mess = new javax.swing.JLabel();
@@ -87,6 +202,10 @@ public class SignUp extends javax.swing.JFrame {
         verifo = new javax.swing.JTextField();
         Verify1 = new com.k33ptoo.components.KButton();
         mess1 = new javax.swing.JLabel();
+        Bar = new loginandreg.ProgressBarCustom();
+        Password2 = new javax.swing.JPasswordField();
+        togbtn2 = new javax.swing.JToggleButton();
+        jLabel14 = new javax.swing.JLabel();
         lefttt = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jXHyperlink1 = new org.jdesktop.swingx.JXHyperlink();
@@ -109,11 +228,15 @@ public class SignUp extends javax.swing.JFrame {
         add = new javax.swing.JTextField();
         AccountType = new java.awt.Choice();
         Gender = new java.awt.Choice();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        city = new java.awt.Choice();
+        country = new java.awt.Choice();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sign Up");
+        setMinimumSize(new java.awt.Dimension(780, 630));
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(800, 500));
         setResizable(false);
         getContentPane().setLayout(null);
 
@@ -148,22 +271,9 @@ public class SignUp extends javax.swing.JFrame {
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Email");
 
-        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setText("City:");
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setText("Country:");
-
         jLabel18.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(255, 255, 255));
         jLabel18.setText("National ID:");
-
-        Bar.setBackground(new java.awt.Color(255, 255, 255));
-        Bar.setForeground(new java.awt.Color(0, 102, 102));
-        Bar.setBorder(null);
-        Bar.setBorderPainted(false);
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
@@ -172,74 +282,21 @@ public class SignUp extends javax.swing.JFrame {
         Lname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         Lname.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         Lname.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        Lname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                LnameActionPerformed(evt);
-            }
-        });
 
         Fname.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         Fname.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         Fname.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        Fname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FnameActionPerformed(evt);
-            }
-        });
-
-        city.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
-        city.setDisabledTextColor(new java.awt.Color(204, 204, 0));
-        city.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        city.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cityActionPerformed(evt);
-            }
-        });
 
         Email.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         Email.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         Email.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        Email.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                EmailActionPerformed(evt);
-            }
-        });
 
         ID.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         ID.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         ID.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        ID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                IDActionPerformed(evt);
-            }
-        });
-
-        country.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
-        country.setDisabledTextColor(new java.awt.Color(204, 204, 0));
-        country.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        country.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                countryActionPerformed(evt);
-            }
-        });
 
         Password.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         Password.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        Password.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PasswordMouseClicked(evt);
-            }
-        });
-        Password.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                PasswordActionPerformed(evt);
-            }
-        });
-        Password.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                PasswordKeyTyped(evt);
-            }
-        });
 
         togbtn1.setText("Show");
         togbtn1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -257,7 +314,15 @@ public class SignUp extends javax.swing.JFrame {
             }
         });
 
-        verifo.setText("Verification Code");
+        //verifo.setText("Verification Code");
+        verifo.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                verifoFocusGained(evt);
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                verifoFocusLost(evt);
+            }
+        });
 
         Verify1.setText("Confirm");
         Verify1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -268,6 +333,20 @@ public class SignUp extends javax.swing.JFrame {
 
         mess1.setForeground(new java.awt.Color(153, 153, 153));
 
+        Password2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        Password2.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+
+        togbtn2.setText("Show");
+        togbtn2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                togbtn2MouseClicked(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Confirm password");
+
         javax.swing.GroupLayout RightLayout = new javax.swing.GroupLayout(Right);
         Right.setLayout(RightLayout);
         RightLayout.setHorizontalGroup(
@@ -277,13 +356,6 @@ public class SignUp extends javax.swing.JFrame {
                     .addGroup(RightLayout.createSequentialGroup()
                         .addGap(122, 122, 122)
                         .addComponent(jLabel1))
-                    .addGroup(RightLayout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(RightLayout.createSequentialGroup()
-                                .addGap(23, 23, 23)
-                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(RightLayout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -301,24 +373,27 @@ public class SignUp extends javax.swing.JFrame {
                                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(Verify, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(Verify1, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(RightLayout.createSequentialGroup()
                                 .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(togbtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel18)
+                            .addComponent(jLabel14)
+                            .addComponent(Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(RightLayout.createSequentialGroup()
-                                .addComponent(jLabel13)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Password2, javax.swing.GroupLayout.PREFERRED_SIZE, 292, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel12)
-                                .addGap(12, 12, 12)
-                                .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(mess, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(Bar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(togbtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(RightLayout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addGroup(RightLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
         RightLayout.setVerticalGroup(
@@ -350,27 +425,27 @@ public class SignUp extends javax.swing.JFrame {
                 .addComponent(jLabel18)
                 .addGap(0, 0, 0)
                 .addComponent(ID, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
-                .addGap(0, 0, 0)
+                .addGap(26, 26, 26)
                 .addComponent(jLabel10)
                 .addGap(0, 0, 0)
                 .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Password, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(togbtn1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Bar, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(RightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Password2, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(togbtn2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Bar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(mess, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel6)
-                .addGap(67, 67, 67))
+                .addGap(120, 120, 120))
         );
 
         Left.add(Right);
@@ -407,11 +482,6 @@ public class SignUp extends javax.swing.JFrame {
         expire_date.setToolTipText("Cvv");
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/yy");
         expire_date.setFormats(dateFormat);
-        expire_date.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                expire_dateActionPerformed(evt);
-            }
-        });
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 102, 102));
@@ -446,11 +516,6 @@ public class SignUp extends javax.swing.JFrame {
                 signupMouseClicked(evt);
             }
         });
-        signup.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                signupActionPerformed(evt);
-            }
-        });
 
         jLabel22.setFont(new java.awt.Font("Forte", 0, 24)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(0, 102, 102));
@@ -465,62 +530,64 @@ public class SignUp extends javax.swing.JFrame {
         atm_pin.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         atm_pin.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         atm_pin.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        atm_pin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                atm_pinActionPerformed(evt);
-            }
-        });
 
         card_no.setBackground(new Color(0,0,0,0));
         card_no.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         card_no.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         card_no.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        card_no.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                card_noActionPerformed(evt);
-            }
-        });
 
         cvv.setBackground(new Color(0,0,0,0));
         cvv.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         cvv.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         cvv.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        cvv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cvvActionPerformed(evt);
-            }
-        });
 
         mob_no.setBackground(new Color(0,0,0,0));
         mob_no.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         mob_no.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         mob_no.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        mob_no.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mob_noActionPerformed(evt);
-            }
-        });
 
         add.setBackground(new Color(0,0,0,0));
         add.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
         add.setDisabledTextColor(new java.awt.Color(204, 204, 0));
         add.setSelectedTextColor(new java.awt.Color(242, 242, 242));
-        add.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addActionPerformed(evt);
-            }
-        });
 
         AccountType.setFont(new java.awt.Font("DialogInput", 3, 12)); // NOI18N
-
         AccountType.add("Saving Account");
         AccountType.add("Fixed Deposit Account");
         AccountType.add("Current Account");
         AccountType.add("recurring Deposit Account");
+
         Gender.setFont(new java.awt.Font("DialogInput", 3, 12)); // NOI18N
         Gender.addItem("Female");
         Gender.addItem("Male");
         Gender.addItem("Prefer Not to say");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel12.setText("City:");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel13.setText("Country:");
+
+        city.setFont(new java.awt.Font("DialogInput", 3, 12)); // NOI18N
+        city.add("Cairo");
+        city.add("Alexandria");
+        city.add("Aswan");
+        city.add("Giza");
+        city.add("Luxor");
+        city.add("Faiyoum");
+        city.add("Mansoura");
+        city.add("Port saied");
+
+        country.setFont(new java.awt.Font("DialogInput", 3, 12)); // NOI18N
+        country.add("Egypt");
+        country.add("Spain");
+        country.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                countryItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout leftttLayout = new javax.swing.GroupLayout(lefttt);
         lefttt.setLayout(leftttLayout);
@@ -530,58 +597,74 @@ public class SignUp extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(leftttLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, leftttLayout.createSequentialGroup()
+                        .addContainerGap(9, Short.MAX_VALUE)
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(leftttLayout.createSequentialGroup()
+                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(leftttLayout.createSequentialGroup()
+                                        .addComponent(jLabel19)
+                                        .addGap(75, 75, 75))
+                                    .addGroup(leftttLayout.createSequentialGroup()
+                                        .addComponent(jLabel20)
+                                        .addGap(18, 18, 18)))
+                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(mob_no, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                                    .addComponent(jLabel21)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
+                                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel17)
+                                        .addComponent(jLabel16))
+                                    .addGap(62, 62, 62)
+                                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(cvv, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                        .addComponent(atm_pin, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
+                                        .addComponent(expire_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, leftttLayout.createSequentialGroup()
+                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, leftttLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel12))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, leftttLayout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(leftttLayout.createSequentialGroup()
+                                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(card_no, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(59, 59, 59))
             .addGroup(leftttLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(leftttLayout.createSequentialGroup()
-                            .addComponent(jLabel4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(leftttLayout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(leftttLayout.createSequentialGroup()
-                                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(leftttLayout.createSequentialGroup()
-                                            .addComponent(jLabel19)
-                                            .addGap(75, 75, 75))
-                                        .addGroup(leftttLayout.createSequentialGroup()
-                                            .addComponent(jLabel20)
-                                            .addGap(18, 18, 18)))
-                                    .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(mob_no, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
-                                        .addComponent(jLabel21)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, leftttLayout.createSequentialGroup()
-                                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel17)
-                                            .addComponent(jLabel16))
-                                        .addGap(62, 62, 62)
-                                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(cvv, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                                            .addComponent(atm_pin, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
-                                            .addComponent(expire_date, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))))
-                    .addGroup(leftttLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(leftttLayout.createSequentialGroup()
-                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(AccountType, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(card_no, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(62, Short.MAX_VALUE))
+                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, leftttLayout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         leftttLayout.setVerticalGroup(
             leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -633,23 +716,27 @@ public class SignUp extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(jLabel19))
                     .addComponent(Gender, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
                 .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(leftttLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(leftttLayout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(251, Short.MAX_VALUE))
+                    .addComponent(jLabel13)
+                    .addComponent(country, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addComponent(city, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
+                .addGroup(leftttLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jXHyperlink1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signup, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(162, 162, 162))
         );
 
         Left.add(lefttt);
         lefttt.setBounds(410, -30, 390, 750);
 
         getContentPane().add(Left);
-        Left.setBounds(0, 0, 800, 570);
+        Left.setBounds(0, 0, 800, 640);
 
         pack();
         setLocationRelativeTo(null);
@@ -665,121 +752,10 @@ public class SignUp extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jXHyperlink1ActionPerformed
 
-    private void expire_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_expire_dateActionPerformed
-        // TODO add your handling code here:
-//        String Expiredate=new String();
-//        java.util.Date selectedDate = expire_date.getDate();
-//        if (selectedDate != null) {
-//            // selectedDate is not null, so you can safely invoke methods on it
-//            Expiredate= selectedDate.toString();
-//            // Use dateString as needed
-//        } else {
-//            // selectedDate is null, handle this case appropriately
-//            System.out.println("Error: selectedDate is null");
-//            // Display an error message or take other appropriate action
-//        }
-//         Expiredate=Expiredate.substring(0,5)
-//
-//        expire_date.set
-    }//GEN-LAST:event_expire_dateActionPerformed
-
-    private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
-
-    }//GEN-LAST:event_signupActionPerformed
-
     private void jLabel22MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel22MouseClicked
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_jLabel22MouseClicked
-
-    private void LnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_LnameActionPerformed
-
-    private void FnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FnameActionPerformed
-
-    private void cityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cityActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cityActionPerformed
-
-    private void EmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmailActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_EmailActionPerformed
-
-    private void IDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_IDActionPerformed
-
-    private void countryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countryActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_countryActionPerformed
-
-    private void atm_pinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_atm_pinActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_atm_pinActionPerformed
-
-    private void card_noActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_card_noActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_card_noActionPerformed
-
-    private void cvvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cvvActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cvvActionPerformed
-
-    private void mob_noActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mob_noActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_mob_noActionPerformed
-
-    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_addActionPerformed
-
-    private void PasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_PasswordActionPerformed
-
-    private void PasswordKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PasswordKeyTyped
-        // TODO add your handling code here:
-             char[] passChars = Password.getPassword();
-             String pass = new String(passChars);
-
-            if(PatternChecker.MatchPattern(pass))
-            {
-                mess.setText("password accepted");
-                Bar.setValue(100);
-                Bar.setBackground(Color.green);
-                Bar.repaint();
-            }
-            else if(!PatternChecker.MatchPatternSchars(pass)&&PatternChecker.MatchPatternchars(pass)&&PatternChecker.MatchPattern8Num(pass))
-            {
-                mess.setText("password must contain 1 special char");
-                Bar.setValue(68);
-            }
-            else if(!PatternChecker.MatchPatternSchars(pass)&&!PatternChecker.MatchPatternchars(pass)&&PatternChecker.MatchPattern8Num(pass))
-            {
-                mess.setText("password must contain 1 upper case and 1 lower case");
-                Bar.setValue(34);
-            }
-            else if(!PatternChecker.MatchPatternSchars(pass)&&!PatternChecker.MatchPatternchars(pass)&&!PatternChecker.MatchPattern8Num(pass))
-            {
-//                nums.setBackground(new java.awt.Color(204, 0, 0));
-                 mess.setText("password must contain 8 numbers");
-            }
-            else
-            {
-                mess.setText("password accepted");
-                Bar.setValue(100);
-                Bar.setBackground(Color.green);
-                Bar.repaint();
-            }
-            if(pass.isEmpty())
-            {
-                Bar.setValue(0);
-            }
-            //nums.repaint();
-    }//GEN-LAST:event_PasswordKeyTyped
 
     private void signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupMouseClicked
         // TODO add your handling code here:
@@ -792,8 +768,8 @@ public class SignUp extends javax.swing.JFrame {
         char[] passChars = Password.getPassword();
         String pass = new String(passChars);
         String Nation_no=ID.getText();
-        String Country =country.getText();
-        String City=city.getText();
+        String Country =country.getSelectedItem();
+        String City=city.getSelectedItem();
         String AccType=AccountType.getSelectedItem();
         String Card_no=card_no.getText();
         String Cvv=cvv.getText();
@@ -816,12 +792,6 @@ public class SignUp extends javax.swing.JFrame {
         {
             JOptionPane.showMessageDialog(this,"long email please provide me with a different one");
             Email.setText(" ");
-        }
-        else if((Country.length())>10 || (City.length())>10)
-        {
-            JOptionPane.showMessageDialog(this,"re-enter a valid city");
-            country.setText(" ");
-            city.setText(" ");
         }
         else if((fname.length())>10 || (lname.length())>10)
         {
@@ -897,6 +867,10 @@ public class SignUp extends javax.swing.JFrame {
             else if(!VerifiedEmail)
             {
                 JOptionPane.showMessageDialog(this,"please verify you email");
+            }
+            else if(!confirmedpassword)
+            {
+                 JOptionPane.showMessageDialog(this,"passwords should be matched before signing up");
             }
             else
             {
@@ -1014,11 +988,11 @@ public class SignUp extends javax.swing.JFrame {
                     }
                 }
 
-//                       this.dispose();
-//                       SignUp2 SignUp2Frame = new SignUp2();
-//                       SignUp2Frame.setVisible(true);
-//                       SignUp2Frame.pack();
-//                       SignUp2Frame.setLocationRelativeTo(null);
+                       this.dispose();
+                       Login LoginFrame = new Login();
+                       LoginFrame.setVisible(true);
+                       LoginFrame.pack();
+                       LoginFrame.setLocationRelativeTo(null);
             }
         }
     }//GEN-LAST:event_signupMouseClicked
@@ -1036,11 +1010,6 @@ public class SignUp extends javax.swing.JFrame {
             togbtn1.setText("Show");
         }
     }//GEN-LAST:event_togbtn1MouseClicked
-
-    private void PasswordMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PasswordMouseClicked
-        // TODO add your handling code here:
-        mess.setText(" ");
-    }//GEN-LAST:event_PasswordMouseClicked
 
     private void VerifyMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VerifyMouseClicked
         // TODO add your handling code here:
@@ -1093,6 +1062,12 @@ public class SignUp extends javax.swing.JFrame {
         }
         if(flag){
             ValMail.sendEmail(Email.getText().trim(),"Verification",RandomCode);
+            if(ReceiveMail.receivemail()==1){
+                JOptionPane.showMessageDialog(this,"Please enter a valid email because this email is not on gmail database");
+            }
+            else{
+                 JOptionPane.showMessageDialog(this,"Verification code Sent\nCheck your inbox");
+            }
         }
         else
         {
@@ -1122,6 +1097,73 @@ public class SignUp extends javax.swing.JFrame {
             mess1.setText("Please enter a different mail as you entered the code worng for 3 times");
         }
     }//GEN-LAST:event_Verify1MouseClicked
+
+    private void togbtn2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_togbtn2MouseClicked
+        // TODO add your handling code here:
+        if(togbtn2.isSelected())
+        {
+            Password2.setEchoChar((char)0);
+            togbtn2.setText("Hide");
+        }
+        else
+        {
+            Password2.setEchoChar('*');
+            togbtn2.setText("Show");
+        }
+    }//GEN-LAST:event_togbtn2MouseClicked
+
+    private void countryItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_countryItemStateChanged
+        // TODO add your handling code here:
+            if (evt.getStateChange() == ItemEvent.SELECTED) {
+            String selectedOption = country.getSelectedItem();
+           
+            if(selectedOption.equals("Egypt"))
+            {   
+                 while (city.getItemCount() > 0) {
+                    city.remove(0); // Remove the item at index 0
+                }
+                city.add("Cairo");
+                city.add("Alexandria");
+                city.add("Aswan");
+                city.add("Giza");
+                city.add("Luxor");
+                city.add("Faiyoum");
+                city.add("Mansoura");
+                city.add("Port saied");
+            }
+            else if(selectedOption.equals("Spain"))
+            {
+                while (city.getItemCount() > 0) {
+                    city.remove(0); // Remove the item at index 0
+                }
+                city.add("Madrid");
+                city.add("Barcelona");
+                city.add("Seville");
+                city.add("Valencia");
+                city.add("Bilbao");
+                city.add("Córdoba");
+                city.add("Málaga");
+                city.add("Zaragoza");
+            }
+            
+         }
+    }//GEN-LAST:event_countryItemStateChanged
+
+    private void verifoFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifoFocusGained
+        // TODO add your handling code here:
+        if (verifo.getText().equals("verification code")) {
+        verifo.setText("");
+        setForeground(Color.BLACK);
+        }
+    }//GEN-LAST:event_verifoFocusGained
+
+    private void verifoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_verifoFocusLost
+        // TODO add your handling code here:
+        if (verifo.getText().isEmpty()) {
+            verifo.setText("verification code");
+            setForeground(Color.GRAY);
+        }
+    }//GEN-LAST:event_verifoFocusLost
 
     /**
      * @param args the command line arguments
@@ -1160,7 +1202,7 @@ public class SignUp extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private java.awt.Choice AccountType;
-    private javax.swing.JProgressBar Bar;
+    private loginandreg.ProgressBarCustom Bar;
     private javax.swing.JTextField Email;
     private javax.swing.JTextField Fname;
     private java.awt.Choice Gender;
@@ -1168,14 +1210,15 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JPanel Left;
     private javax.swing.JTextField Lname;
     private javax.swing.JPasswordField Password;
+    private javax.swing.JPasswordField Password2;
     private javax.swing.JPanel Right;
     private com.k33ptoo.components.KButton Verify;
     private com.k33ptoo.components.KButton Verify1;
     private javax.swing.JTextField add;
     private javax.swing.JTextField atm_pin;
     private javax.swing.JTextField card_no;
-    private javax.swing.JTextField city;
-    private javax.swing.JTextField country;
+    private java.awt.Choice city;
+    private java.awt.Choice country;
     private javax.swing.JTextField cvv;
     private org.jdesktop.swingx.JXDatePicker expire_date;
     private javax.swing.JLabel jLabel1;
@@ -1183,6 +1226,7 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -1206,6 +1250,7 @@ public class SignUp extends javax.swing.JFrame {
     private javax.swing.JTextField mob_no;
     private com.k33ptoo.components.KButton signup;
     private javax.swing.JToggleButton togbtn1;
+    private javax.swing.JToggleButton togbtn2;
     private javax.swing.JTextField verifo;
     // End of variables declaration//GEN-END:variables
 }

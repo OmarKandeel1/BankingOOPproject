@@ -290,9 +290,6 @@
                   <Color blue="f2" green="f2" red="f2" type="rgb"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EmailActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JPasswordField" name="Pass">
               <Properties>
@@ -310,11 +307,6 @@
                   <Color blue="f2" green="f2" red="f2" type="rgb"/>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="PassMouseMoved"/>
-                <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PassMousePressed"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="PassActionPerformed"/>
-              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel4">
               <Properties>
@@ -329,7 +321,7 @@
                 <Property name="text" type="java.lang.String" value="Sign Up"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jXHyperlink1ActionPerformed"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jXHyperlink1MouseClicked"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel8">
@@ -372,7 +364,6 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="kButton1MouseClicked"/>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="kButton1ActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JToggleButton" name="togbtn1">

@@ -11,17 +11,36 @@ public class PatternChecker {
 
     public static Boolean MatchPattern(String EnteredPattern)
     {
+        int i=0;
+        int CouChars=0,CouNums=0,CouSChars=0,CouCChars=0;
+        for(i=0;i<EnteredPattern.length();i++)
+        {
+            char q=EnteredPattern.charAt(i);
+            if(q<='9'&&q>='0')
+            {
+                CouNums++;
+            }
+            else if(q>='a'&&q<='z')
+            {
+                CouChars++;
+            }
+            else if(q>='A'&&q<='Z')
+            {
+                CouCChars++;
+            }
+            else if(q=='@'||q=='!'||q=='_'||q=='-')
+            {
+                CouSChars++;
+            }
+            
+        }
+        
+        if(CouNums>8&&CouCChars>0&&CouChars>0&&CouSChars>0)
+        {
+            return true;   
+        }
         
         
-        //Pattern pattern = Pattern.compile("^(?=(.*[a-z]){2})(?=(.*[A-Z]){2})(?=.*\\d{8,})(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.</>?]).+$");
-        Pattern pattern = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d{8,})(?=.*[@!_\\\\-]).*$");
-        // Match the pattern against the string
-        Matcher matcher = pattern.matcher(EnteredPattern);
-
-        // Check if the pattern is found in the string
-        if (matcher.matches()) {
-            return true;
-        } 
         return false;
     }
     
@@ -29,17 +48,23 @@ public class PatternChecker {
     
     public static Boolean MatchPattern8Num(String EnteredPattern)
     {
+        int i=0;
+        int CouNums=0;
+        for(i=0;i<EnteredPattern.length();i++)
+        {
+            char q=EnteredPattern.charAt(i);
+            if(q<='9'&&q>='0')
+            {
+                CouNums++;
+            }            
+        }
+        
+        if(CouNums>8)
+        {
+            return true;   
+        }
         
         
-        Pattern pattern = Pattern.compile("^\\d{8}$");
-
-        // Match the pattern against the string
-        Matcher matcher = pattern.matcher(EnteredPattern);
-
-        // Check if the pattern is found in the string
-        if (matcher.matches()) {
-            return true;
-        } 
         return false;
     } 
     
@@ -50,15 +75,28 @@ public class PatternChecker {
     {
         
         
-        Pattern pattern = Pattern.compile("^(?=.*[A-Z].*[A-Z])(?=.*[a-z].*[a-z]).*$");
-
-        // Match the pattern against the string
-        Matcher matcher = pattern.matcher(EnteredPattern);
-
-        // Check if the pattern is found in the string
-        if (matcher.matches()) {
-            return true;
-        } 
+        int i=0;
+        int CouChars=0,CouCChars=0;
+        for(i=0;i<EnteredPattern.length();i++)
+        {
+            char q=EnteredPattern.charAt(i);
+            if(q>='a'&&q<='z')
+            {
+                CouChars++;
+            }
+            else if(q>='A'&&q<='Z')
+            {
+                CouCChars++;
+            }
+            
+            
+        }
+        
+        if(CouCChars>0&&CouChars>0)
+        {
+            return true;   
+        }
+        
         
         return false;
     }
@@ -69,17 +107,26 @@ public class PatternChecker {
     public static Boolean MatchPatternSchars(String EnteredPattern)
     {
         
-//        Pattern pattern = Pattern.compile("[^A-Za-z0-9]+");
-
-          Pattern pattern = Pattern.compile(".*[@!_\\\\-].*");
-
-        // Match the pattern against the string
-        Matcher matcher = pattern.matcher(EnteredPattern);
-
-        // Check if the pattern is found in the string
-        if (matcher.matches()) {
-            return true;
-        } 
+        int i=0;
+        int CouSChars=0;
+        for(i=0;i<EnteredPattern.length();i++)
+        {
+            char q=EnteredPattern.charAt(i);
+           if(q=='@'||q=='!'||q=='_'||q=='-')
+            {
+                CouSChars++;
+            }
+            
+        }
+        
+        if(CouSChars>0)
+        {
+            return true;   
+        }
+        
+        
         return false;
     }
+    
+    
 }

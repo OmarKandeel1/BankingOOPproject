@@ -3,19 +3,41 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package loginandreg;
-
+import java.awt.*;
+import javax.swing.*;
 /**
  *
  * @author OmarKandeel
  */
 public class Dash extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Dash
-     */
+       // array of panels
+    JPanel[] panels= new JPanel[5];
+    
+    
+    
+    
     public Dash() {
         initComponents();
+         this.setLocationRelativeTo(null);
+           panels[0] = jPanel_Dash;
+           panels[1] = jPanel_Cards;
+           panels[2] = jPanel_Transaction;
+           panels[3] = jPanel_Transfer;
+           panels[4] = jPanel_Settings;
+            
     }
+  public void showPanel (JPanel panel)
+    {  
+        for (JPanel pnl : panels)
+        {   //hide panles
+            pnl.setVisible(false);
+            
+        }
+            //show only this panel
+            panel.setVisible(true);
+    }
+  private boolean isDarkMode = false;
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -26,19 +48,46 @@ public class Dash extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        left = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jButton_Logout = new javax.swing.JButton();
+        jButton_Mode = new javax.swing.JButton();
+        jPanel_Dash = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel_Transaction = new javax.swing.JPanel();
+        WELCOMING = new javax.swing.JLabel();
+        jPanel_Cards = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jPanel_Settings = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jPanel_Transfer = new javax.swing.JPanel();
+        logo = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        Email1 = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        Email2 = new javax.swing.JTextField();
+        Pass = new javax.swing.JPasswordField();
+        kButton1 = new com.k33ptoo.components.KButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(700, 500));
+        setUndecorated(true);
+        setResizable(false);
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel1.setForeground(new java.awt.Color(0, 102, 102));
+        left.setBackground(new java.awt.Color(0, 102, 102));
+        left.setForeground(new java.awt.Color(0, 102, 102));
 
         jLabel7.setFont(new java.awt.Font("Mistral", 0, 36)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -46,17 +95,30 @@ public class Dash extends javax.swing.JFrame {
 
         jButton1.setBackground(new java.awt.Color(0, 102, 102));
         jButton1.setFont(new java.awt.Font("Segoe UI Historic", 0, 16)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(242, 242, 242));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icons8-menu-24.png"))); // NOI18N
         jButton1.setText("DashBoard");
+        jButton1.setToolTipText("Click here to go to the Dashboard;)");
+        jButton1.setAutoscrolls(true);
         jButton1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton1.setContentAreaFilled(false);
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setDoubleBuffered(true);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setBackground(new java.awt.Color(0, 102, 102));
         jButton2.setFont(new java.awt.Font("Segoe UI Historic", 0, 16)); // NOI18N
         jButton2.setForeground(new java.awt.Color(242, 242, 242));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icons8-transfer-24 (1).png"))); // NOI18N
         jButton2.setText("Transfer");
+        jButton2.setToolTipText("Click here to go to the Transfer ;)");
         jButton2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton2.setContentAreaFilled(false);
+        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -68,7 +130,10 @@ public class Dash extends javax.swing.JFrame {
         jButton3.setForeground(new java.awt.Color(242, 242, 242));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icons8-cards-24 (3).png"))); // NOI18N
         jButton3.setText("Cards");
+        jButton3.setToolTipText("Click here to go to the Cards ;)");
         jButton3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton3.setContentAreaFilled(false);
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -80,7 +145,10 @@ public class Dash extends javax.swing.JFrame {
         jButton4.setForeground(new java.awt.Color(242, 242, 242));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icons8-transaction-24 (1).png"))); // NOI18N
         jButton4.setText("Transactions");
+        jButton4.setToolTipText("Click here to go to the Transactions ;)");
         jButton4.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton4.setContentAreaFilled(false);
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton4ActionPerformed(evt);
@@ -92,36 +160,71 @@ public class Dash extends javax.swing.JFrame {
         jButton5.setForeground(new java.awt.Color(242, 242, 242));
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icons8-settings-24.png"))); // NOI18N
         jButton5.setText("Settigns");
+        jButton5.setToolTipText("Click here to go to the Settigns ;)");
         jButton5.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton5.setContentAreaFilled(false);
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton5ActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        jButton_Logout.setBackground(new java.awt.Color(0, 102, 102));
+        jButton_Logout.setFont(new java.awt.Font("Segoe UI Historic", 0, 16)); // NOI18N
+        jButton_Logout.setForeground(new java.awt.Color(242, 242, 242));
+        jButton_Logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icons8-logout-24.png"))); // NOI18N
+        jButton_Logout.setText("Logout");
+        jButton_Logout.setToolTipText("Click here to go to the Settigns ;)");
+        jButton_Logout.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton_Logout.setContentAreaFilled(false);
+        jButton_Logout.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton_Logout.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_LogoutActionPerformed(evt);
+            }
+        });
+
+        jButton_Mode.setBackground(new java.awt.Color(0, 102, 102));
+        jButton_Mode.setFont(new java.awt.Font("Segoe UI Historic", 0, 16)); // NOI18N
+        jButton_Mode.setForeground(new java.awt.Color(242, 242, 242));
+        jButton_Mode.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icons8-dark-mode-24.png"))); // NOI18N
+        jButton_Mode.setText("Mode");
+        jButton_Mode.setToolTipText("Click here to go to the Settigns ;)");
+        jButton_Mode.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jButton_Mode.setContentAreaFilled(false);
+        jButton_Mode.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton_Mode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ModeActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout leftLayout = new javax.swing.GroupLayout(left);
+        left.setLayout(leftLayout);
+        leftLayout.setHorizontalGroup(
+            leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftLayout.createSequentialGroup()
+                .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(leftLayout.createSequentialGroup()
                         .addGap(33, 33, 33)
-                        .addComponent(jLabel7)
-                        .addGap(11, 11, 11))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel7))
+                    .addGroup(leftLayout.createSequentialGroup()
                         .addGap(27, 27, 27)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3)
                             .addComponent(jButton1)
-                            .addComponent(jButton2)
                             .addComponent(jButton4)
-                            .addComponent(jButton5))))
-                .addContainerGap(24, Short.MAX_VALUE))
+                            .addGroup(leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jButton2)
+                                .addComponent(jButton5))
+                            .addComponent(jButton_Logout)
+                            .addComponent(jButton_Mode))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        leftLayout.setVerticalGroup(
+            leftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(leftLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -130,11 +233,303 @@ public class Dash extends javax.swing.JFrame {
                 .addComponent(jButton3)
                 .addGap(30, 30, 30)
                 .addComponent(jButton4)
-                .addGap(28, 28, 28)
+                .addGap(30, 30, 30)
                 .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 181, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton_Mode, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30)
+                .addComponent(jButton_Logout, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton5)
                 .addGap(27, 27, 27))
+        );
+
+        jPanel_Dash.setPreferredSize(new java.awt.Dimension(934, 510));
+
+        jLabel1.setFont(new java.awt.Font("Sitka Text", 0, 48)); // NOI18N
+        jLabel1.setText("Hello to DashBoard");
+
+        javax.swing.GroupLayout jPanel_DashLayout = new javax.swing.GroupLayout(jPanel_Dash);
+        jPanel_Dash.setLayout(jPanel_DashLayout);
+        jPanel_DashLayout.setHorizontalGroup(
+            jPanel_DashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_DashLayout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 499, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 435, Short.MAX_VALUE))
+        );
+        jPanel_DashLayout.setVerticalGroup(
+            jPanel_DashLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_DashLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_Transaction.setBackground(new java.awt.Color(0, 153, 153));
+        jPanel_Transaction.setPreferredSize(new java.awt.Dimension(934, 510));
+
+        WELCOMING.setFont(new java.awt.Font("Segoe UI Historic", 0, 48)); // NOI18N
+        WELCOMING.setText("Welcome to Transactions");
+
+        javax.swing.GroupLayout jPanel_TransactionLayout = new javax.swing.GroupLayout(jPanel_Transaction);
+        jPanel_Transaction.setLayout(jPanel_TransactionLayout);
+        jPanel_TransactionLayout.setHorizontalGroup(
+            jPanel_TransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_TransactionLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(WELCOMING, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(372, Short.MAX_VALUE))
+        );
+        jPanel_TransactionLayout.setVerticalGroup(
+            jPanel_TransactionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_TransactionLayout.createSequentialGroup()
+                .addComponent(WELCOMING, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 538, Short.MAX_VALUE))
+        );
+
+        jPanel_Cards.setBackground(new java.awt.Color(0, 204, 51));
+        jPanel_Cards.setPreferredSize(new java.awt.Dimension(934, 510));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
+        jLabel2.setText("Cards");
+
+        javax.swing.GroupLayout jPanel_CardsLayout = new javax.swing.GroupLayout(jPanel_Cards);
+        jPanel_Cards.setLayout(jPanel_CardsLayout);
+        jPanel_CardsLayout.setHorizontalGroup(
+            jPanel_CardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_CardsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(760, Short.MAX_VALUE))
+        );
+        jPanel_CardsLayout.setVerticalGroup(
+            jPanel_CardsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_CardsLayout.createSequentialGroup()
+                .addComponent(jLabel2)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
+        jPanel_Settings.setBackground(new java.awt.Color(255, 204, 204));
+        jPanel_Settings.setPreferredSize(new java.awt.Dimension(934, 510));
+
+        jLabel5.setFont(new java.awt.Font("Sitka Text", 0, 48)); // NOI18N
+        jLabel5.setText("Hello to Settings");
+
+        javax.swing.GroupLayout jPanel_SettingsLayout = new javax.swing.GroupLayout(jPanel_Settings);
+        jPanel_Settings.setLayout(jPanel_SettingsLayout);
+        jPanel_SettingsLayout.setHorizontalGroup(
+            jPanel_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_SettingsLayout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(499, Short.MAX_VALUE))
+        );
+        jPanel_SettingsLayout.setVerticalGroup(
+            jPanel_SettingsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_SettingsLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel_Transfer.setBackground(java.awt.Color.white);
+        jPanel_Transfer.setPreferredSize(new java.awt.Dimension(934, 510));
+
+        logo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/transferLogo.v1.png"))); // NOI18N
+        logo.setRequestFocusEnabled(false);
+
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel1.setPreferredSize(new java.awt.Dimension(943, 125));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/template2.png"))); // NOI18N
+        jLabel4.setText(" ");
+
+        jLabel14.setFont(new java.awt.Font("Forte", 0, 24)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(242, 242, 242));
+        jLabel14.setText("X");
+        jLabel14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel14MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Logo/icons8-user-50.png"))); // NOI18N
+        jLabel8.setMaximumSize(new java.awt.Dimension(25, 16));
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel9.setText("Transfer");
+
+        jLabel10.setFont(new java.awt.Font("Sitka Text", 1, 16)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel10.setText("You will need your Password to confirm Transfer");
+
+        jLabel11.setFont(new java.awt.Font("Sitka Text", 1, 20)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel11.setText("Make sure you enter the correct user name");
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel6.setText("Pass:");
+
+        Email1.setBackground(new Color(0,0,0,0));
+        Email1.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        Email1.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        Email1.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        Email1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Email1ActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel12.setText("USER:");
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel13.setText("Amount:");
+
+        Email2.setBackground(new Color(0,0,0,0));
+        Email2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        Email2.setDisabledTextColor(new java.awt.Color(204, 204, 0));
+        Email2.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        Email2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Email2ActionPerformed(evt);
+            }
+        });
+
+        Pass.setBackground(new Color(0,0,0,0));
+        Pass.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 2, 0, new java.awt.Color(0, 102, 102)));
+        Pass.setSelectedTextColor(new java.awt.Color(242, 242, 242));
+        Pass.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                PassMouseMoved(evt);
+            }
+        });
+        Pass.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                PassMousePressed(evt);
+            }
+        });
+        Pass.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                PassActionPerformed(evt);
+            }
+        });
+
+        kButton1.setForeground(new java.awt.Color(204, 102, 0));
+        kButton1.setText("Transfer");
+        kButton1.setkBackGroundColor(new java.awt.Color(255, 102, 102));
+        kButton1.setkBorderRadius(25);
+        kButton1.setkEndColor(new java.awt.Color(255, 255, 51));
+        kButton1.setkHoverEndColor(new java.awt.Color(0, 102, 102));
+        kButton1.setkStartColor(new java.awt.Color(0, 102, 102));
+        kButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                kButton1MouseClicked(evt);
+            }
+        });
+        kButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                kButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel_TransferLayout = new javax.swing.GroupLayout(jPanel_Transfer);
+        jPanel_Transfer.setLayout(jPanel_TransferLayout);
+        jPanel_TransferLayout.setHorizontalGroup(
+            jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 983, Short.MAX_VALUE)
+            .addGroup(jPanel_TransferLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel_TransferLayout.createSequentialGroup()
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Email1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel_TransferLayout.createSequentialGroup()
+                                .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 337, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(63, 63, 63))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_TransferLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_TransferLayout.createSequentialGroup()
+                                .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel12)
+                                    .addGroup(jPanel_TransferLayout.createSequentialGroup()
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Email2, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanel_TransferLayout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(Pass)))
+                                .addGap(288, 288, 288))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_TransferLayout.createSequentialGroup()
+                                .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_TransferLayout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(28, 28, 28))
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(433, 433, 433))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_TransferLayout.createSequentialGroup()
+                                .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(414, 414, 414))))))
+        );
+        jPanel_TransferLayout.setVerticalGroup(
+            jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel_TransferLayout.createSequentialGroup()
+                .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel_TransferLayout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(logo, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Email1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Email2, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(jPanel_TransferLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(kButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -142,32 +537,147 @@ public class Dash extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(532, Short.MAX_VALUE))
+                .addComponent(left, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jPanel_Dash, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGap(0, 157, Short.MAX_VALUE)
+                    .addComponent(jPanel_Transaction, javax.swing.GroupLayout.PREFERRED_SIZE, 927, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGap(0, 157, Short.MAX_VALUE)
+                    .addComponent(jPanel_Cards, javax.swing.GroupLayout.PREFERRED_SIZE, 927, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGap(0, 150, Short.MAX_VALUE)
+                    .addComponent(jPanel_Settings, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGap(0, 150, Short.MAX_VALUE)
+                    .addComponent(jPanel_Transfer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(left, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel_Dash, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel_Transaction, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel_Cards, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel_Settings, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addComponent(jPanel_Transfer, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        showPanel(jPanel_Dash);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        //transfer button
+        showPanel(jPanel_Transfer);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        //cards button
+        showPanel(jPanel_Cards);
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        //transactions button
+        showPanel(jPanel_Transaction);
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        //Settings Button
+        showPanel(jPanel_Settings);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton_LogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_LogoutActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+        Login loginFrame = new Login();
+        loginFrame.setVisible(true);
+        Login.WelcomeUserName=" ";
+//        loginFrame.pack();
+//        loginFrame.setLocationRelativeTo(null);
+    }//GEN-LAST:event_jButton_LogoutActionPerformed
+
+    private void jButton_ModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ModeActionPerformed
+        // TODO add your handling code here:
+         javax.swing.JPanel myPanel1 = this.jPanel_Dash; 
+         javax.swing.JPanel myPanel2 = this.jPanel_Cards; 
+         javax.swing.JPanel myPanel3 = this.jPanel_Settings; 
+         javax.swing.JPanel myPanel4 = this.jPanel_Transaction;
+         javax.swing.JPanel myPanel5 = this.jPanel_Transfer; 
+
+    if (isDarkMode) {
+        // Switch to light mode
+        myPanel1.setBackground(java.awt.Color.WHITE); // Light mode color
+        myPanel2.setBackground(java.awt.Color.WHITE); // Light mode color
+        myPanel3.setBackground(java.awt.Color.WHITE); // Light mode color
+        myPanel4.setBackground(java.awt.Color.WHITE); // Light mode color
+        myPanel5.setBackground(java.awt.Color.WHITE); // Light mode color
+        isDarkMode = false; // Update the mode
+    } else {
+        // Switch to dark mode
+        myPanel1.setBackground(java.awt.Color.DARK_GRAY); // Dark mode color
+        myPanel2.setBackground(java.awt.Color.DARK_GRAY); // Dark mode color
+        myPanel3.setBackground(java.awt.Color.DARK_GRAY); // Dark mode color
+        myPanel4.setBackground(java.awt.Color.DARK_GRAY); // Dark mode color
+        myPanel5.setBackground(java.awt.Color.DARK_GRAY); // Dark mode color
+        isDarkMode = true; // Update the mode
+    }
+
+    // You may also change button text to indicate the current mode
+    //toggleButton.setText(isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode");
+    }//GEN-LAST:event_jButton_ModeActionPerformed
+
+    private void Email1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Email1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Email1ActionPerformed
+
+    private void Email2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Email2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_Email2ActionPerformed
+
+    private void PassMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PassMouseMoved
+
+    }//GEN-LAST:event_PassMouseMoved
+
+    private void PassMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PassMousePressed
+
+    }//GEN-LAST:event_PassMousePressed
+
+    private void PassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PassActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_PassActionPerformed
+
+    private void kButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_kButton1MouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_kButton1MouseClicked
+
+    private void kButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_kButton1ActionPerformed
+
+    }//GEN-LAST:event_kButton1ActionPerformed
+
+    private void jLabel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel14MouseClicked
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jLabel14MouseClicked
 
     /**
      * @param args the command line arguments
@@ -195,6 +705,9 @@ public class Dash extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Dash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        Dash DashFrame = new Dash(); 
+        DashFrame.pack();
+        DashFrame.setLocationRelativeTo(null);
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -205,12 +718,38 @@ public class Dash extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Email1;
+    private javax.swing.JTextField Email2;
+    private javax.swing.JPasswordField Pass;
+    public javax.swing.JLabel WELCOMING;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton_Logout;
+    private javax.swing.JButton jButton_Mode;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel_Cards;
+    private javax.swing.JPanel jPanel_Dash;
+    private javax.swing.JPanel jPanel_Settings;
+    private javax.swing.JPanel jPanel_Transaction;
+    private javax.swing.JPanel jPanel_Transfer;
+    private com.k33ptoo.components.KButton kButton1;
+    private javax.swing.JPanel left;
+    private javax.swing.JLabel logo;
     // End of variables declaration//GEN-END:variables
 }
